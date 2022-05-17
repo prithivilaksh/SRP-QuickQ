@@ -20,23 +20,28 @@ const firebaseConfig = {
 
 // Initialize Cloud Firestore and get a reference to the service
 const app = initializeApp(firebaseConfig);
-// const db = getFirestore(app);
-const db = initializeFirestore(app, {
-    cacheSizeBytes: CACHE_SIZE_UNLIMITED
-  });
+const db = getFirestore(app);
+// const db = initializeFirestore(app, {
+//     cacheSizeBytes: CACHE_SIZE_UNLIMITED
+//   });
 
-enableIndexedDbPersistence(db)
-  .catch((err) => {
-      if (err.code == 'failed-precondition') {
-          // Multiple tabs open, persistence can only be enabled
-          // in one tab at a a time.
-          // ...
-      } else if (err.code == 'unimplemented') {
-          // The current browser does not support all of the
-          // features required to enable persistence
-          // ...
-      }
-  });
+  if(process.browser){
+        enableIndexedDbPersistence(db)
+        .catch((err) => {
+            if (err.code == 'failed-precondition') {
+                // Multiple tabs open, persistence can only be enabled
+                // in one tab at a a time.
+                // ...
+                console.log("1")
+            } else if (err.code == 'unimplemented') {
+                // The current browser does not support all of the
+                // features required to enable persistence
+                // ...
+                console.log("2")
+            }
+            else {console.log("3")}
+        });
+}
 export {db}
 
 // export default function initFirebase()
