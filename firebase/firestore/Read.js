@@ -48,7 +48,7 @@ const read = () => {
         {namearray.map(({id,name}) =>{
             return (
                 <h1 key={id}>
-                    name : {name}<br />
+                    username : {name}<br />
                 </h1>
                 
             )
