@@ -1,0 +1,36 @@
+import firebase from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { initializeApp, getApps, getApp } from "firebase/app";
+
+
+
+// TODO: Replace the following with your app's Firebase project configuration
+// See: https://firebase.google.com/docs/web/learn-more#config-object
+const firebaseConfig = {
+    apiKey: "AIzaSyAFS1RvcdefHnTfwfeVLZx2h-z3IozC7-I",
+    authDomain: "quickq-63d1d.firebaseapp.com",
+    projectId: "quickq-63d1d",
+    storageBucket: "quickq-63d1d.appspot.com",
+    messagingSenderId: "362386810626",
+    appId: "1:362386810626:web:5c40f8546aacac79db041b",
+    measurementId: "G-EQEJHDY03B"
+};
+
+// Initialize Firebase
+
+// Initialize Cloud Firestore and get a reference to the service
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+export {db}
+
+// export default function initFirebase()
+// {
+//     if(getApps().length === 0 )
+//     {
+//         initializeApp(firebaseConfig);
+//         console.log("firebase initialized successfully - pl ")
+//     }
+//     else
+//     {getApp();}
+// }
