@@ -1,7 +1,7 @@
 {
-    "short_name": "QuickQ",
-    "name": "QuickQ pwa with offline capablities",
-    "description": "nextjs firebase context/reactquery ",
+    "short_name": "QQ",
+    "name": "QuickQ",
+    "description": "nextjs firebase context/reactquery pwa with offline capabilities ",
     "orientation": "portrait",
     "icons": [
       {

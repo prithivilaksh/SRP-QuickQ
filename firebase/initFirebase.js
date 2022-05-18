@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import { getFirestore,enableIndexedDbPersistence, initializeFirestore, CACHE_SIZE_UNLIMITED } from "firebase/firestore";
 import { initializeApp, getApps, getApp } from "firebase/app";
+import {getAuth} from 'firebase/auth'
 
 
 
@@ -21,6 +22,7 @@ const firebaseConfig = {
 // Initialize Cloud Firestore and get a reference to the service
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth()
 // const db = initializeFirestore(app, {
 //     cacheSizeBytes: CACHE_SIZE_UNLIMITED
 //   });
@@ -42,7 +44,7 @@ const db = getFirestore(app);
             else {console.log("3")}
         });
 }
-export {db}
+export {db,app,auth}
 
 // export default function initFirebase()
 // {

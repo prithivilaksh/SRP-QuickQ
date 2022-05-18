@@ -1,19 +1,30 @@
 import '../styles/globals.css'
+import { AppProps } from 'next/app'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Navbar from './components/NavbarComp'
+import { AuthContextProvider } from '../context/AuthContext'
+import { useRouter } from 'next/router'
+import ProtectedRoute from './components/ProtectedRoute'
 import Head from 'next/head'
 
-function MyApp({ Component, pageProps }) {
-  return (
-  
-  <>
-  <Head>
-  <link rel="manifest" href="/manifest.json"/>
+const noAuthRequired = ['/', '/login', '/signup']
 
-  </Head>
-    
-    <Component {...pageProps} />
-  </>
+function MyApp({ Component, pageProps }) {
+  const router = useRouter()
+
+  return (
+    <AuthContextProvider>
+      <Head><link rel="manifest" href="/manifest.json"/></Head>
+      <Navbar />
+      {noAuthRequired.includes(router.pathname) ? (
+        <Component {...pageProps} />
+      ) : (
+        <ProtectedRoute>
+          <Component {...pageProps} />
+        </ProtectedRoute>
+      )}
+    </AuthContextProvider>
   )
-  
 }
 
 export default MyApp
