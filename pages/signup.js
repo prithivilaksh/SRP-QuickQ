@@ -16,7 +16,7 @@ const Signup = () => {
     if (user) {
       router.push('/dashboard')
     }
-  }, [router,user])
+  }, [user,router])
   const handleSignup = async (e) => {
     e.preventDefault()
 
@@ -31,8 +31,9 @@ const Signup = () => {
   }
   console.log(user)
   return (
-    !{user}? <h1> hiiiiiii </h1> :
     <>
+    {user?<></>:
+    
    
     
     
@@ -81,7 +82,9 @@ const Signup = () => {
         </Button>
       </Form>
     </div>
+    }
     </>
+    
   )
 }
 

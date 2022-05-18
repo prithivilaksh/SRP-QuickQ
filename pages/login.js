@@ -15,12 +15,12 @@ const Login = () => {
     if (user) {
       router.push('/dashboard')
     }
-  }, [user])
+  }, [user,router])
 
   const handleLogin = async (e) => {
     e.preventDefault()
 
-    console.log(user)
+    // console.log(user)
     try {
       await login(data.email, data.password)
       router.push('/dashboard')
@@ -30,8 +30,9 @@ const Login = () => {
   }
   console.log(user)
   return (
-    !{user }? <> hq111111</>:
+    
     <>
+    {user?<></>:
  
         <div
         style={{
@@ -77,7 +78,7 @@ const Login = () => {
           </Button>
         </Form>
       </div>
-
+    }
     </>
     
   )

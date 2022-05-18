@@ -11,9 +11,9 @@ const write = () => {
             const dataobj={
                 name: name
             };
-
-            await addDoc(collection(db, "username"),dataobj);
             setName("")
+            await addDoc(collection(db, "username"),dataobj);
+            
             console.log("added into collection -pl")
         }
     

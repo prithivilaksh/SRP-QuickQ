@@ -13,6 +13,7 @@ import {useEffect} from 'react'
 export default function Home() {
   const { user, login ,loading} = useAuth()
   const router = useRouter()
+  const a=1
   useEffect(() => {
     if (!user) {
       router.push('/login')
@@ -26,6 +27,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
       </Head>
+      {a?<p>trueeeeeeeeeeeeeeeeeeee</p>:<p> falseeeeeeeeeeeeeeeeee</p>}
       <Write />
       <Read />
       <Link href='/timeline'><a> go to timeline component</a></Link>

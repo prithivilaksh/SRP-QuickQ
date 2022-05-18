@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import ProtectedRoute from './components/ProtectedRoute'
 import Head from 'next/head'
 
-const noAuthRequired = ['/', '/login', '/signup']
+const noAuthRequired = [ '/login', '/signup']
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
