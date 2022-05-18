@@ -1,13 +1,23 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useRouter } from 'next/router'
 // import firebase from '../firebase/initFirebase'
 import Write from '../firebase/firestore/Write'
 import Read from '../firebase/firestore/Read'
 import Link from 'next/link'
+import {useAuth} from '../context/AuthContext'
+import {useEffect} from 'react'
 // firebase()
 
 export default function Home() {
+  const { user, login ,loading} = useAuth()
+  const router = useRouter()
+  useEffect(() => {
+    if (!user) {
+      router.push('/login')
+    }
+  }, [user])
   return (
     <>
       <Head>
