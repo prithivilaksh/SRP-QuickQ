@@ -1,13 +1,14 @@
-import '../styles/globals.css'
+
 import { AppProps } from 'next/app'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Navbar from './components/NavbarComp'
+import Navbar from '../components/NavbarComp'
 import { AuthContextProvider } from '../context/AuthContext'
 import { useRouter } from 'next/router'
-import ProtectedRoute from './components/ProtectedRoute'
+import ProtectedRoute from '../components/ProtectedRoute'
 import Head from 'next/head'
+// import '../styles/globals.css'
 
-const noAuthRequired = [ '/login', '/signup']
+const noAuthRequired = [ '/login', '/signup','/loginsignup']
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()

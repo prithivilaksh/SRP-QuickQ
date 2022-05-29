@@ -18,7 +18,7 @@ export default function Home() {
     if (!user) {
       router.push('/login')
     }
-  }, [user])
+  }, [user,router])
   return (
     <>
       <Head>

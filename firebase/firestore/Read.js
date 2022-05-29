@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 import { db } from "../initFirebase"; 
 
 
-import { collection, query, doc,where, onSnapshot } from "firebase/firestore";
+import { collection, query, orderBy,doc,where, onSnapshot } from "firebase/firestore";
 import { useEffect,useState } from "react";
 
 
