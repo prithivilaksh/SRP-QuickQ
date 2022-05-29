@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
@@ -20,8 +20,8 @@ const  Timeli= ({time}) => {
       const handleClickAway = () => {
           setVisible(false);
         };
-      const [visible,setVisible]=React.useState(false);
-      const [value, setValue] = React.useState( new Date("2020-01-01 12:00"));
+      const [visible,setVisible]=useState(false);
+      const [value, setValue] = useState( new Date("2020-01-01 12:00"));
       let a=time[0].getHours() + ":" + time[0].getMinutes();
       let b=time[1].getHours() + ":" + time[1].getMinutes();
       let c=value.getHours() + ":" + value.getMinutes();
