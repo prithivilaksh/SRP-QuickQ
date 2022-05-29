@@ -25,7 +25,10 @@ const  Timeli= ({time}) => {
       let a=time[0].getHours() + ":" + time[0].getMinutes();
       let b=time[1].getHours() + ":" + time[1].getMinutes();
       let c=value.getHours() + ":" + value.getMinutes();
-      return( 
+      return( <>
+
+     
+                  
                   <TimelineItem >
                       {/* <TimelineOppositeContent color="text.secondary">
                           {time}
@@ -59,6 +62,8 @@ const  Timeli= ({time}) => {
                       </TimelineSeparator>
                       <TimelineContent>{a} - {b} value selected : {c}</TimelineContent>
                   </TimelineItem>
+
+                  </>
               )
 }
  

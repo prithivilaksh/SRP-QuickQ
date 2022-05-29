@@ -11,6 +11,8 @@ let times=[[new Date(0,0,0,8),new Date(0,0,0,18,45)],[new Date(0,0,0,8),new Date
 
   let i=0;
   return (
+    <>
+    <div>
     <React.Fragment>
       <Timeline >
         
@@ -24,6 +26,11 @@ let times=[[new Date(0,0,0,8),new Date(0,0,0,18,45)],[new Date(0,0,0,8),new Date
     
       </Timeline>
     </React.Fragment>
+    </div>
+
+    
+
+    </>
   );
 }
 
