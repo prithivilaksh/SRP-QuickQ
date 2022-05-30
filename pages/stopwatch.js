@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import Timer from "../Components/Timer";
-import ControlButtons from "../Components/ControlButton";
-import Sidenav from "../Components/Sidenav";
-import Cards from "../Components/Cards";
+import { useEffect,useState } from 'react';
+import Timer from "../components/Timer";
+import ControlButtons from "../components/ControlButton";
+import Cards from "../components/Cards";
   
 function StopWatch() {
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [time, setTime] = useState(0);
   
-  React.useEffect(() => {
+  useEffect(() => {
     let interval = null;
   
     if (isActive && isPaused === false) {
@@ -112,8 +111,7 @@ function StopWatch() {
   
            `}
           </style>
-          <Sidenav></Sidenav>
-            <center><Cards></Cards></center>
+            <center><Cards /></center>
      <center><div className="container" > 
     <div className="stop-watch">
       <Timer time={time} />
