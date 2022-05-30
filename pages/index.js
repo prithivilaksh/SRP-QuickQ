@@ -34,6 +34,7 @@ export default function Home() {
       <Write />
       <Read />
       <Link href='/timeline'><a> go to timeline component</a></Link>
+      <Link href='/stopwatch'><a> go to stopwatch component</a></Link>
     
     {/* <div className={styles.container}>
       <Head>
