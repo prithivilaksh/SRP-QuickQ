@@ -1,4 +1,6 @@
 import React, { useState,useEffect } from 'react'
+import { doc, setDoc,addDoc ,getFirestore, collection } from "firebase/firestore";
+import { db } from "../firebase/initFirebase" 
 import { Button, Form } from 'react-bootstrap'
 import { useAuth } from '../context/AuthContext'
 import { useRouter } from 'next/router'
@@ -12,6 +14,17 @@ const Signup = () => {
     password: '',
   })
 
+  const createuser =async (email)=>{
+
+    const dataobj={
+      email
+    };
+    await addDoc(collection(db, "users"),dataobj);
+    
+    console.log("added into users collection -pl")
+
+  }
+
   useEffect(() => {
     if (user) {
       router.push('/dashboard')
@@ -21,7 +34,8 @@ const Signup = () => {
     e.preventDefault()
 
     try {
-      await signup(data.email, data.password)
+      await signup(data.email, data.password).then(()=> {createuser(data.email)})
+      
       router.push('/dashboard')
     } catch (err) {
       console.log(err)
