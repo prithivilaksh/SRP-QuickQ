@@ -5,7 +5,7 @@ import TimeLi from '../components/TimeLi'
 
 export default function OppositeContentTimeline() {
 
-let times=[[new Date(0,0,0,8),new Date(0,0,0,18,45)],[new Date(0,0,0,8),new Date(0,0,0,18,45)],[new Date(0,0,0,8),new Date(0,0,0,18,45)]]
+let times=[[new Date(0,0,0,8),new Date(0,0,0,7,45)],[new Date(0,0,0,8),new Date(0,0,0,18,45)],[new Date(0,0,0,8),new Date(0,0,0,18,45)]]
 
 
 
