@@ -15,6 +15,12 @@ import Timeline from './timeline'
 import firebase from "firebase/app";
  
  
+
+
+//changeeeeeeeeeeeeeeeeeeeeeeeee according to label in queue table
+
+
+
 export default function Addslots({qname,code}) {
  
   const { user, signup ,loading} = useAuth()
@@ -22,14 +28,50 @@ export default function Addslots({qname,code}) {
   useEffect(()=>
   {
           const q =  query(collection(db, "queues"), where("code", "==",code));
-          let value=[];
+          let slots=[],bookedslots=[];
           const unsubscribe = onSnapshot(q, (querySnapshot) => 
           {
               querySnapshot.forEach((doc) => {
-                value=doc.data().slots;
+                slots=doc.data().slots;
+                bookedslots=doc.data().bookedslots;
                 });
-              console.log("value=================",value)
-              settimes(value)
+              // console.log("value=================",value)
+
+                let res=[];
+
+              
+                let j=0;
+                console.log("here is it",slots,bookedslots)
+                
+
+
+                if(bookedslots && bookedslots.length>0)
+                {
+                        for(let i=0;i<bookedslots.length;)
+                        {
+                          while(j<slots.length && i<bookedslots.length && slots[j].endvalue.toDate()<=bookedslots[i].startvalue.toDate())
+                          {
+                              res.push(slots[j]);
+                              j++;
+                          }
+                          if(j<slots.length && i<bookedslots.length)res.push({startvalue:slots[j].startvalue,endvalue:bookedslots[i].startvalue})
+                          let nextstart=bookedslots[i].endvalue;i++;
+                          while(j<slots.length && i<bookedslots.length && bookedslots[i].endvalue.toDate() <= slots[j].endvalue.toDate())
+                          {
+                            res.push({startvalue:nextstart,endvalue:bookedslots[i].startvalue})
+                            nextstart=bookedslots[i].endvalue;
+                            i++;
+                          }
+                          if(j<slots.length)res.push({startvalue:nextstart,endvalue:slots[j].endvalue})
+                          j++;
+        
+                        }
+        
+                        while(j<slots.length){res.push(slots[j]);j++;}
+                }
+                else res=slots;
+              console.log("res====",res)
+              settimes(res)
           })
           
   },[])
@@ -170,7 +212,7 @@ export default function Addslots({qname,code}) {
 `  
 }</style>
     <br className="" /> <br className="" /> <br className="" /> <br className="" />
-    <Timeline times={times}/>
+    <Timeline times={times} code={code} />
 </>
   )
     }
