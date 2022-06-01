@@ -1,12 +1,12 @@
 import react from "react";
-import Cards from "../components/Cards";
+import Cards2 from "../components/Cards2";
 import {useState,useEffect} from 'react'
 import firebase from "firebase/app";
 import { db } from "../firebase/initFirebase"; 
 import { collection, query, orderBy,doc,where, onSnapshot } from "firebase/firestore";
 import { useAuth } from '../context/AuthContext'
 
-export default function Yourqueues() {
+export default function Queues() {
 
 
 
@@ -22,11 +22,11 @@ export default function Yourqueues() {
               let qu=[];
               querySnapshot.forEach((doc) => {
                   console.log(doc.id)
-                  qu=doc.data().hisqueue;
+                  qu=doc.data().hisubqueue;
               });
               setqarray(qu)
               console.log(qu)
-              // console.log("read queue data from firebase -pl",qu.join(", "));
+              console.log("read queue data from firebase -pl",qu.join(", "));
           })
           
   },[])
@@ -136,7 +136,7 @@ export default function Yourqueues() {
 
   {qarray.map(({code,qname})=>{
 
-    return (<Cards key={code} name={qname} code={code}/>)
+    return (<Cards2 key={code} name={qname} code={code}/>)
   })}
 
         

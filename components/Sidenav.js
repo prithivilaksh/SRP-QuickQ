@@ -109,7 +109,7 @@ const Sidenav = () => {
            
            {user?(<>
             <Link href="#"><a >Your Slots</a></Link>
-            <Link href="#"><a >Queues</a></Link>
+            <Link href="/queues"><a >Queues</a></Link>
             <Link href="createqueue"><a >create q</a></Link>
             <Link href="subscribe"><a >subscribe q</a></Link>
             <Link href="/yourqueues"><a >Your Queues</a></Link>

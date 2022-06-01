@@ -75,7 +75,7 @@ export default function Addslots({qname,code}) {
 
     const addslotstodb=async (e) =>{
  
-      settsarr([]);setminstarttime(new Date(0,0,0,0,1));setminendtime(new Date(0,0,0,0,2));
+      
       const q = query(collection(db, "queues"), where("code", "==",code));
       const querySnapshot = await getDocs(q);
       let requs={},reqid;
@@ -86,7 +86,9 @@ export default function Addslots({qname,code}) {
         reqid=doc.id;
       });
       requs.slots=tsarr;
-      await setDoc(doc(db, "queues",reqid),requs);//-------------------------------------------------
+      await setDoc(doc(db, "queues",reqid),requs);
+      settsarr([]);setminstarttime(new Date(0,0,0,0,1));setminendtime(new Date(0,0,0,0,2));
+      //-------------------------------------------------
       // db->queues-> where code==code add dataobj
   
       

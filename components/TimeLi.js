@@ -7,13 +7,13 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import TimelineDot from '@mui/lab/TimelineDot';
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
+import date from 'date-and-time';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 
 const  Timeli= ({time}) => {
-    console.log(time)
     const go=()=>{
         setVisible(true);
       }
@@ -22,8 +22,11 @@ const  Timeli= ({time}) => {
         };
       const [visible,setVisible]=useState(false);
       const [value, setValue] = useState( new Date("2020-01-01 12:00"));
-      let a=time[0].getHours() + ":" + time[0].getMinutes();
-      let b=time[1].getHours() + ":" + time[1].getMinutes();
+        console.log("nowwwwwwwwwwwwwwwwwww",time)
+      let p=time.startvalue.toDate(),q=time.endvalue.toDate();
+      let a=p.getHours() + ":" +p.getMinutes();
+      let b=q.getHours() + ":" +q.getMinutes();
+      console.log(a,b)
       let c=value.getHours() + ":" + value.getMinutes();
       return( <>
 
@@ -34,15 +37,19 @@ const  Timeli= ({time}) => {
                           {time}
                       </TimelineOppositeContent> */}
                     
+                      <ClickAwayListener onClickAway={handleClickAway}>
                       <TimelineSeparator >
                             <TimelineDot />
-                            <ClickAwayListener onClickAway={handleClickAway}>
+                            
+                            <>
+
+                          
 
                             <TimelineConnector onClick={()=>go()}>
                           {visible && <>
                               
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <Stack spacing={3}>
+                                <Stack spacing={10}>
                                 <TimePicker
                                 renderInput={(params) => <TextField {...params} />}
                                 value={value}
@@ -50,19 +57,25 @@ const  Timeli= ({time}) => {
                                 onChange={(newValue) => {
                                   setValue(newValue);
                                 }}
-                                minTime={time[0]}
-                                maxTime={time[1]}
+                                minTime={p}
+                                maxTime={q}
                               />
                               </Stack>
                               </LocalizationProvider>
+                              
                                       </>}
+                                      
                             </TimelineConnector>
-                            </ClickAwayListener>
+                           {visible && <input type="button" onClick={()=>{console.log("hiiiii")}} value ="book slot" className="" />} 
+                            </>
+                            
                            
                       </TimelineSeparator>
+                      </ClickAwayListener>
+                      {/* {visible && } */}
                       <TimelineContent>{a} - {b} value selected : {c}</TimelineContent>
                   </TimelineItem>
-
+                     
                   </>
               )
 }
