@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import ProtectedRoute from '../components/ProtectedRoute'
 import Head from 'next/head'
 import Sidenav from '../components/Sidenav'
-// import '../styles/globals.css'
+import '../styles/globals.css'
 
 const noAuthRequired = [ '/login', '/signup']
 

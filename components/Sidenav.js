@@ -45,7 +45,7 @@ const Sidenav = () => {
               font-family: "Lato", sans-serif;
               background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
 
-              transition: .5s;
+              transition: 10ms;
             }
         
             .sidenav {
@@ -55,10 +55,11 @@ const Sidenav = () => {
               z-index: 1;
               top: 0;
               left: 0;
-              background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
-
+              /* background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1)); */
+              background-color:black;
+            
               overflow-x: hidden;
-              transition: 0.3s;
+              transition: 10ms;
               padding-top: 60px;
             }
             
@@ -68,7 +69,7 @@ const Sidenav = () => {
               font-size: 25px;
               color: #818181;
               display: block;
-              transition: 0.3s;
+              transition: 10ms;
             }
             
             .sidenav a:hover {
@@ -88,7 +89,7 @@ const Sidenav = () => {
               top: 15px;
        
           
-              transition: margin-left .3s;
+              transition: margin-left 10ms;
               padding:15px;
             }
             
@@ -109,7 +110,7 @@ const Sidenav = () => {
            {user?(<>
             <Link href="#"><a >Your Slots</a></Link>
             <Link href="#"><a >Queues</a></Link>
-            <Link href="#"><a >Your Queues</a></Link>
+            <Link href="/yourqueues"><a >Your Queues</a></Link>
             <Nav.Link href="#" onClick={() => {logout().then(()=>{router.push('/login')})}}><a >LogOut</a></Nav.Link>
             {/* <Nav.Link onClick={() => {logout().then(()=>{router.push('/login')})}}> Logout
                 </Nav.Link> */}

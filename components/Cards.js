@@ -1,25 +1,25 @@
 import React from "react";
+import Link from 'next/link'
+import Addslots from "../components/addslots";
+import {useState} from 'react'
   
- function Cards() {
+ function Cards({name,code}) {
   
-  
+  const [visible,setvisible]=useState(false);
   return (
       <>
       <style jsx>
           {`
             @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
             .container {
-                
-                
-             
-              }
+                 }
             .main{
               font-family: 'Poppins', sans-serif;
             
               display: grid;
               height: 100%;
               width: 100%;
-            //background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
+            background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
              
               }
             ::selection{
@@ -44,10 +44,11 @@ import React from "react";
               width:40rem;
             margin: 1rem;
             padding: 0.3rem;
+            allign:center;
             text-align: center;
             color: inherit;
             text-decoration: none;
-            border: 1px solid #eaeaea;
+            border: 3px solid #eaeaea;
             border-radius: 10px;
             transition: color 0.15s ease, border-color 0.15s ease;
             max-width: 400px;
@@ -77,18 +78,22 @@ import React from "react";
       </style>
       <div className="container">
       <div className="grid">
-          <a href="" className="card">
-            <h2>ABC Hospital&emsp;</h2>
+          
+          
+          <Link href="#" >
+            <a className="card" onClick={()=>{setvisible(!visible)}}>
+            <h2>{name}</h2>
+            <p>{code}</p>
               </a>
-
-          {/* <a href="" className="card">
-            <h2>XYZ Bank&emsp;</h2>
-               </a>
-
-          <a href="" className="card">
-            <h2>Lazy River&emsp;</h2>
-             </a> */}
-             </div></div>
+          </Link>
+          
+        
+          
+             </div>
+      </div>
+      {visible?<div className="">
+          <Addslots qname={name} code={code}/>
+      </div>:<></>}
     </>
   );
 }

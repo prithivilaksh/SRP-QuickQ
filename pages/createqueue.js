@@ -12,7 +12,7 @@ export default function Createqueue() {
   const { user, signup ,loading} = useAuth()
     const [qname,setqname]=useState("");
 
-    const addqtouser=async (e)=>{
+    const addqtouserandq=async (e)=>{
       e.preventDefault();
       var uniq = 'id' + (new Date()).getTime().toString().slice(5);
 
@@ -24,8 +24,8 @@ export default function Createqueue() {
     let requs,reqid,arr=[dataobj];
     const usersref = collection(db, "users");
     const q = query(usersref, where("email", "==",user.email));
-          const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
+    const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
         requs=doc.data();
@@ -37,12 +37,16 @@ export default function Createqueue() {
     requs.hisqueue=arr;
   
    
-console.log(requs)
-    await setDoc(doc(db, "users",reqid),requs);
-    // await addDoc(collection(db, "user"),dataobj);
-    
-    console.log("added qcode and name into user collection -pl")
+          console.log(requs)
+              await setDoc(doc(db, "users",reqid),requs);
+              await addDoc(collection(db, "queues"),dataobj);
+              // await addDoc(collection(db, "user"),dataobj);
+              
+              console.log("added qcode and name into user and queue collection -pl")
     }
+
+
+    
 
 
 
@@ -193,7 +197,7 @@ console.log(requs)
             </div>
         <div className="field btn">
               <div className="btn-layer"></div>
-              <input type="submit" onClick={addqtouser} value="Create"/>
+              <input type="submit" onClick={addqtouserandq} value="Create"/>
               
             {/* <button className="mybtn " onClick={addqtouser} > Create</button> */}
             </div>
