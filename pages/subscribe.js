@@ -1,8 +1,71 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import {useState} from 'react'
+import { db } from "../firebase/initFirebase" 
+import { useAuth } from '../context/AuthContext'
+import { doc, setDoc,addDoc,getDocs ,getFirestore } from "firebase/firestore";
+import { collection, query, where } from "firebase/firestore";
 //import styles from '../styles/Sub.module.css'
 
 export default function Subscribe() {
+
+  const { user, signup ,loading} = useAuth()
+    const [qcode,setqcode]=useState("");
+  const addqtouserhissubq=async (e)=>
+  {
+        e.preventDefault();
+      
+
+        const dataobj={
+          code:qcode
+        };
+
+      let flag=false;
+      const q0=query(collection(db,"queues"), where("code", "==",qcode));
+      const querySnapshot0 = await getDocs(q0);
+      querySnapshot0.forEach((doc) => {
+        // if that queue exists in the list of queues
+        dataobj.qname=doc.data().qname
+        flag=true;
+      
+      });
+
+
+      if(flag)
+      {
+    
+                let requs,reqid,arr=[dataobj];
+                const usersref = collection(db, "users");
+                const q = query(usersref, where("email", "==",user.email));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    // console.log(doc.id, " => ", doc.data());
+                    requs=doc.data();
+                    reqid=doc.id;
+                  });
+                // console.log("sehereeeeeeeeeeeeee",requs,reqid)
+                if(requs.hissubqueue)arr = arr.concat(requs.hissubqueue);
+                requs.hisubqueue=arr;
+                console.log(requs)
+                console.log("hola")
+                await setDoc(doc(db,"users",reqid),requs);
+                console.log("subscribed to a queue ")
+      }
+
+      else errormsg
+
+      
+  }
+
+
+
+
+
+
+
+
+
   return (
     <>
     <style>{`
@@ -144,11 +207,11 @@ export default function Subscribe() {
         <div className="form-inner">
           <form action="#" className="login">
             <div className="field">
-              <input type="text" placeholder="Enter Code" required/>
+            <input type="text" name="qcode" required value={qcode} onChange={(e)=>{setqcode(e.target.value)}} />
             </div>
         <div className="field btn">
               <div className="btn-layer"></div>
-              <input type="submit" value="Subscribe"/>
+              <input type="submit" onClick={addqtouserhissubq} value="Subscribe"/>
             </div>
               </form>
         </div>

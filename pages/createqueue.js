@@ -12,37 +12,38 @@ export default function Createqueue() {
   const { user, signup ,loading} = useAuth()
     const [qname,setqname]=useState("");
 
-    const addqtouserandq=async (e)=>{
-      e.preventDefault();
-      var uniq = 'id' + (new Date()).getTime().toString().slice(5);
+    const addqtouserandq=async (e)=>
+    {
+          e.preventDefault();
+          var uniq = 'id' + (new Date()).getTime().toString().slice(5);
 
-      const dataobj={
-        code:uniq,
-        qname:qname
-    };
+          const dataobj={
+            code:uniq,
+            qname:qname
+        };
 
-    let requs,reqid,arr=[dataobj];
-    const usersref = collection(db, "users");
-    const q = query(usersref, where("email", "==",user.email));
-    const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
-        requs=doc.data();
-        reqid=doc.id;
-      });
-    console.log("sehereeeeeeeeeeeeee",requs,reqid)
-    if(requs.hisqueue)
-      arr = arr.concat(requs.hisqueue);
-    requs.hisqueue=arr;
-  
-   
-          console.log(requs)
-              await setDoc(doc(db, "users",reqid),requs);
-              await addDoc(collection(db, "queues"),dataobj);
-              // await addDoc(collection(db, "user"),dataobj);
-              
-              console.log("added qcode and name into user and queue collection -pl")
+        let requs,reqid,arr=[dataobj];
+        const usersref = collection(db, "users");
+        const q = query(usersref, where("email", "==",user.email));
+        const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            requs=doc.data();
+            reqid=doc.id;
+          });
+        console.log("sehereeeeeeeeeeeeee",requs,reqid)
+        if(requs.hisqueue)
+          arr = arr.concat(requs.hisqueue);
+        requs.hisqueue=arr;
+      
+      
+              console.log(requs)
+                  await setDoc(doc(db, "users",reqid),requs);
+                  await addDoc(collection(db, "queues"),dataobj);
+                  // await addDoc(collection(db, "user"),dataobj);
+                  
+                  console.log("added qcode and name into user and queue collection -pl")
     }
 
 
