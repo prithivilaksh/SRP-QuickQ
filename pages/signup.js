@@ -275,7 +275,7 @@ form .btn:hover .btn-layer{
     
     <main className="main">
     <div className="wrapper">
-    <div className="title-text"><h1>Sign Up</h1></div>
+    <div className="title-text container"><h1 className="">QuickQ</h1></div>
     
     <div className="form-container">
       <div className="form-inner"> 
