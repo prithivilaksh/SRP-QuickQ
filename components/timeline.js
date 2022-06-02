@@ -17,7 +17,7 @@ export default function OppositeContentTimeline({times,code}) {
       <Timeline >
         
 
-        {times.map((time) => {
+        {times && times.map((time) => {
                             i=i+1;
                             console.log("time===============",time)
                             return (<TimeLi key={i} time={time} code={code}/>)

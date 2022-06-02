@@ -7,6 +7,8 @@ import { doc, setDoc,addDoc,getDocs ,getFirestore } from "firebase/firestore";
 import { collection, query, where } from "firebase/firestore";
 
 
+
+
 export default function Createqueue() {
 
   const { user, signup ,loading} = useAuth()
@@ -47,6 +49,7 @@ export default function Createqueue() {
     }
 
 
+
     
 
 
@@ -55,7 +58,7 @@ export default function Createqueue() {
   return (
     <>
     <style>{
- `.container {
+      `.container {
   padding: 0 2rem;
 }
 .bttt{
@@ -63,13 +66,44 @@ export default function Createqueue() {
     color:#eaeaea;
 }
 .main {
-  min-height: 100vh;
+  min-height: 90vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.wrapper{
+  overflow: hidden;
+  max-width: 390px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+  margin-bottom: 140px;
+}
+.wrapper .title-text{
+  display: flex;
+  width: 200%;
+}
+.wrapper .title{
+  width: 50%;
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+.wrapper .slide-controls{
+  position: relative;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  overflow: hidden;
+  margin: 30px 0 10px 0;
+  justify-content: space-between;
+  border: 1px solid lightgrey;
+  border-radius: 15px;
 }
 
 .footer {
@@ -168,6 +202,84 @@ export default function Createqueue() {
   margin-left: 0.5rem;
 }
 
+.wrapper .form-container{
+  width: 100%;
+  overflow: hidden;
+}
+.form-container .form-inner{
+  display: flex;
+  width: 200%;
+}
+.form-container .form-inner form{
+  width: 50%;
+  transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+.form-inner form .field{
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+}
+.form-inner form .field input{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding-left: 15px;
+  border-radius: 15px;
+  border: 1px solid lightgrey;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+.form-inner form .field input:focus{
+  border-color: #000000;
+  // box-shadow: inset 0 0 3px #fb6aae; 
+}
+.form-inner form .field input::placeholder{
+  color: #999;
+  transition: all 0.3s ease;
+}
+form .field input:focus::placeholder{
+  color: #000000;
+}
+.form-inner form .pass-link{
+  margin-top: 5px;
+}
+.form-inner form .signup-link{
+  text-align: center;
+  margin-top: 30px;
+}
+.form-inner form .pass-link a,
+.form-inner form .signup-link a{
+  color: #000000;
+  text-decoration: none;
+}
+.form-inner form .pass-link a:hover,
+.form-inner form .signup-link a:hover{
+  text-decoration: underline;
+}
+form .btn{
+  height: 50px;
+  width: 100%;
+  border-radius: 25px;
+  position: relative;
+  overflow: hidden;
+
+}
+form .btn .btn-layer{
+  height: 100%;
+  width: 300%;
+  position: absolute;
+  left: -100%;
+  //background: -webkit-linear-gradient(right,#003366,#004080,#0059b3, #0073e6);
+background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
+  border-radius: 15px;
+  transition: all 0.4s ease;;
+  
+}
+form .btn:hover .btn-layer{
+  left: 0;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
@@ -197,7 +309,7 @@ export default function Createqueue() {
               <input type="text" name="qname" required value={qname} onChange={(e)=>{setqname(e.target.value)}} />
             </div>
         <div className="field btn">
-              <div className="btn-layer"></div>
+              {/* <div className="btn-layer"></div> */}
               <input type="submit" onClick={addqtouserandq} value="Create"/>
               
             {/* <button className="mybtn " onClick={addqtouser} > Create</button> */}
@@ -211,3 +323,13 @@ export default function Createqueue() {
 </>
   )
 }
+
+
+
+
+
+
+
+
+
+

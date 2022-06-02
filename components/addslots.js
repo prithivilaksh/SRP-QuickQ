@@ -84,6 +84,7 @@ export default function Addslots({qname,code}) {
         // console.log(doc.id, " => ", doc.data());
         requs=doc.data();
         reqid=doc.id;
+        console.log(reqid)
       });
       requs.slots=tsarr;
       await setDoc(doc(db, "queues",reqid),requs);
@@ -92,7 +93,7 @@ export default function Addslots({qname,code}) {
       // db->queues-> where code==code add dataobj
   
       
-      console.log("added into collection -pl")
+      console.log("added into collection -pl        agaiiiiiin",requs)
   }
  
     const addtoslots=()=>{

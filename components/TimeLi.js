@@ -6,6 +6,7 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import TimelineDot from '@mui/lab/TimelineDot';
+import { useAuth } from '../context/AuthContext'
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { db } from "../firebase/initFirebase"
@@ -17,6 +18,7 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 
 const  Timeli= ({time,code}) => {
+  const { user, signup ,loading} = useAuth()
   const router = useRouter()
     const go=()=>{
         setVisible(true);
@@ -37,6 +39,11 @@ const  Timeli= ({time,code}) => {
       const addtimetobookedslots=async()=>
       {
 
+          router.push('/')
+          let dataobj={
+            startvalue:value,
+            endvalue: date.addMinutes(value,20)                                         //will changeeeeeeeee in futureeeeeeeeee
+          }
           const q = query(collection(db, "queues"), where("code", "==",code));
           const querySnapshot = await getDocs(q);
           let requs={},reqid;
@@ -47,24 +54,35 @@ const  Timeli= ({time,code}) => {
             reqid=doc.id;
           });
 
-          let dataobj={
-            startvalue:value,
-            endvalue: date.addMinutes(value,20)                                         //will changeeeeeeeee in futureeeeeeeeee
-          }
+          
 
           if(requs.bookedslots)requs.bookedslots.push(dataobj);
           else requs.bookedslots=[dataobj];
-          router.push('/')
+          
           await setDoc(doc(db, "queues",reqid),requs);
-          console.log("booked appointment")
-          
-          //-------------------------------------------------
-          // db->queues-> where code==code add dataobj
-      
-          
-          
 
+          let dataobj0={
+            qname:requs.qname,
+            code:requs.code,
+            startvalue:value,
+            endvalue: date.addMinutes(value,20)                                         //will changeeeeeeeee in futureeeeeeeeee
+          }
+          const q0 = query(collection(db, "users"), where("email", "==",user.email));
+          const querySnapshot0 = await getDocs(q0);
+          let requs0={},reqid0;
+            querySnapshot0.forEach((doc) => {
+            requs0=doc.data();
+            reqid0=doc.id;
+          });
 
+          if(requs0.bookedslots)requs0.bookedslots.push(dataobj0);
+          else requs0.bookedslots=[dataobj0];
+          
+          if(reqid0){
+          await setDoc(doc(db, "users",reqid0),requs0);
+          console.log("booked appointment",reqid0)
+          }
+          else console.log("appointment not booked")
         }
 
 

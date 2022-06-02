@@ -43,7 +43,19 @@ export default function Addslots({qname,code}) {
                 let j=0;
                 console.log("here is it",slots,bookedslots)
                 
-
+                function compare( a, b ) {
+                  if ( a.endvalue.toDate() < b.endvalue.toDate() ){
+                    return -1;
+                  }
+                  if ( a.endvalue.toDate() > b.endvalue.toDate() ){
+                    return 1;
+                  }
+                  return 0;
+                }
+                
+                if(bookedslots)bookedslots.sort(compare);
+                if(slots)
+                slots.sort(compare);
 
                 if(bookedslots && bookedslots.length>0)
                 {

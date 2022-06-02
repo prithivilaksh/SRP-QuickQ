@@ -1,12 +1,12 @@
 import react from "react";
-import Cards2 from "../components/Cards2";
+import Cards3 from "../components/Cards3";
 import {useState,useEffect} from 'react'
 import firebase from "firebase/app";
 import { db } from "../firebase/initFirebase"; 
 import { collection, query, orderBy,doc,where, onSnapshot } from "firebase/firestore";
 import { useAuth } from '../context/AuthContext'
 
-export default function Queues() {
+export default function Yourslots() {
 
 
 
@@ -19,13 +19,13 @@ export default function Queues() {
           const q = query(collection(db, "users"),where("email", "==",user.email));
           const unsubscribe = onSnapshot(q, (querySnapshot) => 
           {
-              let qu=[];
+              let qu;
               querySnapshot.forEach((doc) => {
                   console.log(doc.id)
-                  qu=doc.data().hisubqueue;
+                  qu=doc.data().bookedslots;
               });
               if(qu)setqarray(qu)
-              console.log(qu)
+              console.log("this is what u r looking for",qu)
               // console.log("read queue data from firebase -pl",qu.join(", "));
           })
           
@@ -134,9 +134,9 @@ export default function Queues() {
 }</style>
 <main className="main" >
 
-  {qarray.map(({code,qname})=>{
+  {qarray && qarray.map(({code,qname,startvalue,endvalue})=>{
 
-    return (<Cards2 key={code} name={qname} code={code}/>)
+    return (<Cards3 key={code} name={qname} code={code} startvalue={startvalue} endvalue={endvalue}/>)
   })}
 
         

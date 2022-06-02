@@ -134,7 +134,7 @@ export default function Yourqueues() {
 }</style>
 <main className="main" >
 
-  {qarray.map(({code,qname})=>{
+  { qarray && qarray.map(({code,qname})=>{
 
     return (<Cards key={code} name={qname} code={code}/>)
   })}
