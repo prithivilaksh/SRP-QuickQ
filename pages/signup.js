@@ -313,7 +313,7 @@ form .btn:hover .btn-layer{
           />
         </Form.Group>
 <div className=' text-center'>
-  <input type="submit" className="btn btn-primary" value="Sign Up"/>
+  <input type="submit" className="btn btn-dark" value="Sign Up"/>
 </div>
 
       </Form>
