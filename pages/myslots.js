@@ -44,8 +44,8 @@ export default function Myslots() {
                             });
                             
                         })
-                        console.log("sanjeeeeeeeeeeeeeeeeeeeeeeeeeeeeet",res)
-                        setqarray(res); 
+                        // console.log("sanjeeeeeeeeeeeeeeeeeeeeeeeeeeeeet",res)
+                        // setqarray(res); 
                     })
                 });
                 
