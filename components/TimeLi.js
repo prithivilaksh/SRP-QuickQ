@@ -42,7 +42,8 @@ const  Timeli= ({time,code}) => {
           router.push('/')
           let dataobj={
             startvalue:value,
-            endvalue: date.addMinutes(value,20)                                         //will changeeeeeeeee in futureeeeeeeeee
+            endvalue: date.addMinutes(value,20),
+            email:user.email                                         //will changeeeeeeeee in futureeeeeeeeee
           }
           const q = query(collection(db, "queues"), where("code", "==",code));
           const querySnapshot = await getDocs(q);
