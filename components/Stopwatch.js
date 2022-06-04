@@ -1,7 +1,7 @@
 import { useEffect,useState } from 'react';
-import Timer from "../components/Timer";
-import ControlButtons from "../components/ControlButton";
-import Cards from "../components/Cards";
+import Timer from "./Timer";
+import ControlButtons from "./ControlButton";
+import Cards from "./Cards";
   
 function StopWatch() {
   const [isActive, setIsActive] = useState(false);
@@ -111,7 +111,6 @@ function StopWatch() {
   
            `}
           </style>
-            <center><Cards /></center>
      <center><div className="container" > 
     <div className="stop-watch">
       <Timer time={time} />

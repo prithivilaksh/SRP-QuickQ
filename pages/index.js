@@ -16,10 +16,10 @@ export default function Home() {
   const router = useRouter()
   const a=1
   useEffect(() => {
-    if (!user) {
-      router.push('/login')
-    }
-  }, [user,router])
+    if (!user) router.push('/login')
+    else router.push('/dashboard')
+    
+  }, [])
   return (
     <>
       
@@ -30,11 +30,11 @@ export default function Home() {
         <link rel="manifest" href="/manifest.json" />
       </Head>
       {/* {a?<p>trueeeeeeeeeeeeeeeeeeee</p>:<p> falseeeeeeeeeeeeeeeeee</p>} */}
-      
+{/*       
       <Write />
       <Read />
       <Link href='/timeline'><a> go to timeline component</a></Link>
-      <Link href='/stopwatch'><a> go to stopwatch component</a></Link>
+      <Link href='/stopwatch'><a> go to stopwatch component</a></Link> */}
     
     {/* <div className={styles.container}>
       <Head>

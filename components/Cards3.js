@@ -35,7 +35,7 @@ import {useState} from 'react'
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            max-width: 300px;
+            
           }
           
           .card {
@@ -77,7 +77,7 @@ import {useState} from 'react'
           `}
       </style>
       <div className="container">
-      <div className="grid">
+      <div className="grid container">
           
           
           <Link href="#" >

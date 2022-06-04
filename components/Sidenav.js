@@ -3,11 +3,13 @@ import { useAuth } from '../context/AuthContext'
 import { useState, useRef } from 'react'
 import { Container,Nav, Navbar } from 'react-bootstrap'
 import { useRouter } from 'next/router'
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 const Sidenav = () => {
 
   const { user, logout } = useAuth()
   const router = useRouter()
     const snav = useRef(0);
+    const [visible,setvisible]=useState(false)
     const mai=useRef(0);
 
     function openNav() {
@@ -15,19 +17,25 @@ const Sidenav = () => {
         // document.getElementById("main").style.marginLeft = "250px";
         // document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         // console.log(snav);
+
         mai.current.style.backgroundColor="linear-gradient(to right, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1))";
-        snav.current.style.width="250px";
+        snav.current.style.width="300px";
         //mai.current.style.marginLeft="500px";
+        setvisible(true);
         mai.current.style.marginTop="300px";
        // mai.current.style.fill="#0000";
       
       }
+      const handleClickAway = () => {
+        // if(visible)
+        console.log('clicked')
+      };
       
       function closeNav() {
         // document.getElementById("mySidenav").style.width = "0";
         // document.getElementById("main").style.marginLeft= "0";
         // document.body.style.backgroundColor = "white";
-
+        setvisible(false);
         snav.current.style.width="0px";
         mai.current.style.marginLeft="0px";
         mai.current.style.marginTop="10px"
@@ -36,7 +44,7 @@ const Sidenav = () => {
    
 
     return (
-
+      
        <>
 
           <style jsx>{`
@@ -100,7 +108,7 @@ const Sidenav = () => {
             
             `}
         </style>
-        
+        {/* <ClickAwayListener id="uknowwwwwwwww" onClickAway={handleClickAway}><>hola */}
         <div id="mySidenav" ref={snav} className="sidenav">
             <Link href="#"><a  className="closebtn" onClick={()=>closeNav()}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="White" className="bi bi-chevron-double-left" viewBox="0 0 16 16">
   <path fillRule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
@@ -114,7 +122,8 @@ const Sidenav = () => {
             <Link href="subscribe"><a >subscribe q</a></Link>
             <Link href="/yourqueues"><a >Your Queues</a></Link>
             <Link href="/myslots"><a >My slots</a></Link>
-            <Nav.Link href="#" onClick={() => {logout().then(()=>{router.push('/login')})}}><a >LogOut</a></Nav.Link>
+            <Link href="/login"><a onClick={() => {logout()}}>Log out</a></Link>
+            {/* <Nav.Link href="#" ><a >LogOut</a></Nav.Link> */}
             {/* <Nav.Link onClick={() => {logout().then(()=>{router.push('/login')})}}> Logout
                 </Nav.Link> */}
 
@@ -130,6 +139,8 @@ const Sidenav = () => {
 
             
         </div>
+        
+        
 
 
 
@@ -138,13 +149,14 @@ const Sidenav = () => {
   <path fillRule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"></path>
   <path fillRule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"></path>
 </svg></span>
+
         </div>
 
-
+{/* // </></ClickAwayListener> */}
       
-
+        
       </>
-
+      
 
 
       );

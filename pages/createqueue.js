@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import {useState} from 'react'
 import { db } from "../firebase/initFirebase" 
 import { useAuth } from '../context/AuthContext'
@@ -12,11 +13,16 @@ import { collection, query, where } from "firebase/firestore";
 export default function Createqueue() {
 
   const { user, signup ,loading} = useAuth()
+  const router = useRouter()
     const [qname,setqname]=useState("");
+    const [error,seterror]=useState(false)
+    
 
     const addqtouserandq=async (e)=>
     {
           e.preventDefault();
+          if(qname==''){seterror(true);return;}
+          router.push('/yourqueues');
           var uniq = 'id' + (new Date()).getTime().toString().slice(5);
 
           const dataobj={
@@ -46,6 +52,7 @@ export default function Createqueue() {
                   // await addDoc(collection(db, "user"),dataobj);
                   
                   console.log("added qcode and name into user and queue collection -pl")
+          
     }
 
 
@@ -164,7 +171,7 @@ export default function Createqueue() {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
+  
 }
 
 .card {
@@ -232,7 +239,7 @@ export default function Createqueue() {
 }
 .form-inner form .field input:focus{
   border-color: #000000;
-  // box-shadow: inset 0 0 3px #fb6aae; 
+  
 }
 .form-inner form .field input::placeholder{
   color: #999;
@@ -295,7 +302,7 @@ form .btn:hover .btn-layer{
 }</style>
     <div className="container">
       
-      <div className="bttt"><h2>Create a Queue</h2></div>
+      <div className="bttt text-center"><h2>Create a Queue</h2></div>
     
       <main className="main">
       <div className="wrapper">
@@ -306,14 +313,16 @@ form .btn:hover .btn-layer{
         <div className="form-inner"> 
           <form action="#" className="login">
             <div className="field">
-              <input type="text" name="qname" required value={qname} onChange={(e)=>{setqname(e.target.value)}} />
+              <input type="text" name="qname" value={qname} onChange={(e)=>{seterror(false);setqname(e.target.value)}} required={true}/>
             </div>
-        <div className="field btn">
-              {/* <div className="btn-layer"></div> */}
-              <input type="submit" onClick={addqtouserandq} value="Create"/>
+        {/* <div className="field btn"> */}
+              {/* <div className="btn-layer"></div> */}<br></br>
+              <input type="submit" className="btn btn-dark"onClick={addqtouserandq} value='Create'/>
+
+              {error &&<h4 className='text-center font-weight-bold text-danger'><br />Error</h4>}
               
             {/* <button className="mybtn " onClick={addqtouser} > Create</button> */}
-            </div>
+            {/* </div> */}
               </form>
         </div>
       </div>

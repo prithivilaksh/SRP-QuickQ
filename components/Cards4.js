@@ -1,6 +1,7 @@
 import React from "react";
 import Link from 'next/link'
 import Addslots from "../components/addslots";
+import Stopwatch from "./Stopwatch"
 import {useState} from 'react'
   
  function Cards4({startvalue,endvalue,email}) {
@@ -35,7 +36,7 @@ import {useState} from 'react'
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            max-width: 300px;
+            
           }
           
           .card {
@@ -77,11 +78,11 @@ import {useState} from 'react'
           `}
       </style>
       <div className="container">
-      <div className="grid">
+      <div className="grid container">
           
           
           <Link href="#" >
-            <a className="card">
+            <a className="card" onClick={()=>{setvisible(!visible)}}>
             <h2>{email}</h2>
             <p>{startvalue.toDate().getHours()}:{startvalue.toDate().getMinutes()} - {endvalue.toDate().getHours()}:{endvalue.toDate().getMinutes()}</p>
               </a>
@@ -89,6 +90,9 @@ import {useState} from 'react'
         
              </div>
       </div>
+          {visible?<div className="">
+              <Stopwatch/>
+          </div>:<></>}
     </>
   );
 }

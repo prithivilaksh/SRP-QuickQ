@@ -37,9 +37,17 @@ export default function Myslots() {
                                 console.log(doc.id)
                                 ires=doc.data().bookedslots;
                                 console.log("sannnnnnnnnn",ires)
-                                res=res.concat(ires);
+                                if(ires)res=res.concat(ires);
                                 console.log("sannnnnnnnnn",res)
-                                setqarray(res); 
+                                function compare( a, b ) 
+                                {
+                                    if ( a.endvalue.toDate() < b.endvalue.toDate() ) return -1;
+                                    if ( a.endvalue.toDate() > b.endvalue.toDate() )return 1;
+                                    return 0;
+                                  }
+                                  
+                                  if(res)res.sort(compare);
+                                  setqarray(res); 
                                 
                             });
                             

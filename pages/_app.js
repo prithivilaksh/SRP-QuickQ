@@ -9,6 +9,7 @@ import Head from 'next/head'
 import Sidenav from '../components/Sidenav'
 import '../styles/globals.css'
 
+
 const noAuthRequired = [ '/login', '/signup']
 
 function MyApp({ Component, pageProps }) {
