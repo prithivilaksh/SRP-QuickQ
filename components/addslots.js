@@ -256,7 +256,7 @@ export default function Addslots({qname,code}) {
  
 `  
 }</style>
-    <br className="" /> <br className="" /> <br className="" /> <br className="" />
+    {/* <br className="" /> <br className="" /> <br className="" /> <br className="" /> */}
     {tsarr.length>0?<div className='txt-color-white'>
         <p>selected slots</p> {tsarr.map((interval)=> {
  
@@ -267,7 +267,7 @@ export default function Addslots({qname,code}) {
         })}
     </div>:<></>}
     <br></br>
-    <div className="">
+    <div className="container">
             <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3}>
             <TimePicker
@@ -292,7 +292,7 @@ export default function Addslots({qname,code}) {
  
                 <TimePicker
                 renderInput={(params) => <TextField {...params} sx={{svg: { color: 'black' },input: { color: 'white' },label: { color: 'white' }}}/>}
-                label="end value"
+                label="end"
                 value={endvalue}
                 onChange={(newendValue) => {
                     setendvalue(newendValue);
@@ -302,9 +302,11 @@ export default function Addslots({qname,code}) {
                 />
              </Stack>
     </LocalizationProvider>
-    <button type="button" onClick={addtoslots} >add</button>
-    <button type="button" onClick={addslotstodb} > submit</button>
-    <button type="button" onClick={()=>{settsarr([]);setminstarttime(new Date(0,0,0,0,1));setminendtime(new Date(0,0,0,0,2));}} >clear</button>
+    <br></br>
+    <button type="button" className="btn btn-dark mx-2" onClick={addtoslots} >add</button> 
+    <button type="button" className="btn btn-dark mx-2" onClick={addslotstodb} > submit</button>
+    <button type="button" className="btn btn-dark mx-2" onClick={()=>{settsarr([]);setminstarttime(new Date(0,0,0,0,1));setminendtime(new Date(0,0,0,0,2));}} >clear</button>
+    
     </div>
 
     {/* <div className="container">

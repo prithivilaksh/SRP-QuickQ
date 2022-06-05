@@ -86,9 +86,7 @@ import {useState} from 'react'
             <p>{code}</p>
               </a>
           </Link>
-          
-        
-          
+         
              </div>
       </div>
       {visible?<div className="">

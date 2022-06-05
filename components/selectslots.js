@@ -223,7 +223,7 @@ export default function Addslots({qname,code}) {
  
 `  
 }</style>
-    <br className="" /> <br className="" /> <br className="" /> <br className="" />
+    {/* <br className="" /> <br className="" /> <br className="" /> <br className="" /> */}
     <Timeline times={times} code={code} />
 </>
   )
