@@ -329,7 +329,7 @@ form .btn:hover .btn-layer{
             </div>
             <br></br>
 
-            <button type="submit" className="btn btn-dark"onClick={addqtouserhissubq}>Subscribe</button>
+            <button type="submit" className="btn btn-dark" onClick={addqtouserhissubq}>Subscribe</button>
             {error &&<h4 className='text-center font-weight-bold text-danger'><br />Error</h4>}
         {/* <div className="field btn">
               <div className="btn-layer"></div>

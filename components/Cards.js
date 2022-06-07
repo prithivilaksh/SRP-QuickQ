@@ -6,6 +6,7 @@ import {useState} from 'react'
  function Cards({name,code}) {
   
   const [visible,setvisible]=useState(false);
+  // const [visible0,setvisible0]=useState(false);
   return (
       <>
       <style jsx>
@@ -89,6 +90,8 @@ import {useState} from 'react'
          
              </div>
       </div>
+
+
       {visible?<div className="">
           <Addslots qname={name} code={code}/>
       </div>:<></>}

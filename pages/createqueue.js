@@ -317,7 +317,7 @@ form .btn:hover .btn-layer{
             </div>
         {/* <div className="field btn"> */}
               {/* <div className="btn-layer"></div> */}<br></br>
-              <input type="submit" className="btn btn-dark"onClick={addqtouserandq} value='Create'/>
+              <input type="submit" className="btn btn-dark" onClick={addqtouserandq} value='Create'/>
 
               {error &&<h4 className='text-center font-weight-bold text-danger'><br />Error</h4>}
               

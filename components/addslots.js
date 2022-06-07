@@ -30,6 +30,11 @@ export default function Addslots({qname,code}) {
     const [maxstarttime,setmaxstarttime]=useState(new Date(0,0,0,23,54));
     const [minendtime,setminendtime]=useState(new Date(0,0,0,0,2));
     const [maxendtime,setmaxendtime]=useState(new Date(0,0,0,23,55));
+
+    let o=1;
+    const [labels,setlabels]=useState([]);
+    const [tb2,settb2]=useState(20);
+    const [tb1,settb1]=useState("");
    
  
  
@@ -87,6 +92,7 @@ export default function Addslots({qname,code}) {
         console.log(reqid)
       });
       requs.slots=tsarr;
+      requs.labels=labels
       await setDoc(doc(db, "queues",reqid),requs);
       settsarr([]);setminstarttime(new Date(0,0,0,0,1));setminendtime(new Date(0,0,0,0,2));
       //-------------------------------------------------
@@ -122,7 +128,23 @@ export default function Addslots({qname,code}) {
         console.log('array=',tsarr)
        
       }
- 
+  
+
+      const addlabel=()=>{
+        // e.preventDefault();
+        // console.log(startvalue>endvalue)
+        if(tb1=="") return;
+        console.log("inside label func")
+
+        let temparr=[];
+        if(labels)temparr=labels.slice();
+        temparr.push({label:tb1,time:tb2});
+        setlabels(temparr);
+        settb1("");
+        settb2(20);
+       
+      }
+//  console.log(labels)
   return (
     <>
     <style>{
@@ -257,6 +279,35 @@ export default function Addslots({qname,code}) {
 `  
 }</style>
     {/* <br className="" /> <br className="" /> <br className="" /> <br className="" /> */}
+  
+    {/* <br></br> */}
+
+    <div className=" container">
+    <form className="form-inline">
+        <div className=" text-center form-group mb-2">
+          {labels.length>0 && <> Selected Labels </>} 
+          { labels && labels.map(({label,time})=>{
+            o++;
+            return <div key={o}> {label} : {time}</div>
+          })}
+       </div>
+      <div className="form-group mx-sm-3 mb-2 ">
+        <label  className="text-white ">Label</label>
+        <input type="text" className="form-control" id="labelname" value={tb1} onChange={(e)=>{settb1(e.target.value)}} placeholder="Simply give a name" /><br></br>
+        <label  className="text-white ">Time in minutes</label>
+        <input type="number" className="form-control" value={tb2} min={1} onChange={(e)=>{settb2(e.target.value)}} id="duration" placeholder={20}  />
+        <br />
+        <div className="text-center">
+        <button type="button" onClick={addlabel} className=" btn btn-dark mx-2">Add Label</button>
+        <button type="button" className="btn btn-dark mx-2" onClick={()=>{setlabels([])}} >clear</button>
+        </div>
+        
+      </div>
+      
+    </form>
+
+    </div>
+
     {tsarr.length>0?<div className='txt-color-white'>
         <p>selected slots</p> {tsarr.map((interval)=> {
  
@@ -266,7 +317,7 @@ export default function Addslots({qname,code}) {
             return (<> {start.getHours()}:{start.getMinutes()} to {end.getHours()}:{end.getMinutes()} ,  </>)
         })}
     </div>:<></>}
-    <br></br>
+        <br></br>
     <div className="container">
             <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3}>
