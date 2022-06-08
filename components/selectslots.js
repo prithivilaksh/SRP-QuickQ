@@ -110,19 +110,27 @@ export default function Addslots({qname,code}) {
     console.log("hers is factor",factor)
     setval(e)
 
+    console.log("--------------------------------------",labels)
     let temp=[];
     times.map((time)=>{
 
       let k=time.endvalue.toDate();
+      console.log("*******************************************************",k)
       k.setMinutes(k.getMinutes() - labels[e]);
       let alpha=Timestamp.fromDate(new Date(k));
-      console.log("kilooooooooooooooooooooooooooooo",time.startvalue,alpha)
+      console.log("kilooooooooooooooooooooooooooooo",time.startvalue,alpha.toDate())
       if(k.getTime() > time.startvalue.toDate().getTime())
         temp.push({startvalue:time.startvalue,endvalue:alpha})
     })
 
     settimes2(temp)
     setvisible(true)
+
+    times.map((time)=>{
+      console.log(time,"aaaaaaaaaaaaaa")
+      console.log(time.startvalue.toDate());
+      console.log(time.endvalue.toDate())
+    })
 
     // let tempk=temp;
     // console.log("handle select triggered")
@@ -131,6 +139,9 @@ export default function Addslots({qname,code}) {
     // console.log(times2)
 
   }
+
+
+
  
    
  

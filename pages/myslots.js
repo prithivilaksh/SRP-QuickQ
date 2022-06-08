@@ -19,7 +19,7 @@ export default function Myslots() {
           const q = query(collection(db, "users"),where("email", "==",user.email));
           const unsubscribe = onSnapshot(q, (querySnapshot) => 
           {
-                let qus=[];
+                let qus=[];let res=[],ires;
                 querySnapshot.forEach((doc) => 
                 {
                     console.log(doc.id);
@@ -31,11 +31,11 @@ export default function Myslots() {
                         const quer = query(collection(db, "queues"),where("code", "==",qu.code));
                         const unsubscribe0 = onSnapshot(quer, (querSnapshot) => 
                         {
-                            let res=[],ires;
-                            querSnapshot.forEach((doc) => 
+                            
+                            querSnapshot.forEach((doco) => 
                             {
-                                console.log(doc.id)
-                                ires=doc.data().bookedslots;
+                                console.log(doco.id)
+                                ires=doco.data().bookedslots;
                                 console.log("sannnnnnnnnn",ires)
                                 if(ires)res=res.concat(ires);
                                 console.log("sannnnnnnnnn",res)

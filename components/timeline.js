@@ -6,9 +6,13 @@ import TimeLi from './TimeLi'
 export default function OppositeContentTimeline({times,code,lab,dur}) {
 
 // let times=[[new Date(0,0,0,8),new Date(0,0,0,7,45)],[new Date(0,0,0,8),new Date(0,0,0,18,45)],[new Date(0,0,0,8),new Date(0,0,0,18,45)]]
-
-
-  console.log("laaaaaaaaaaaaaaaaaaaaaaaaaab",lab)
+  console.log(times,"timesssssssssssssssssss")
+  times.map((time)=>{
+    // console.log(time,"aaaaaaaaaaaaaa")
+    console.log(time.startvalue.toDate());
+    console.log(time.endvalue.toDate())
+  })
+  console.log("laaaaaaaaaaaaaaaaaaaaaaaaaab",times)
   let i=0;
   return (
     <>
