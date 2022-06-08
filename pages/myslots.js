@@ -167,9 +167,9 @@ export default function Myslots() {
 }</style>
 <main className="main" >
 
-  {qarray && qarray.map(({email,startvalue,endvalue})=>{
+  {qarray && qarray.map(({email,startvalue,endvalue,label,qcode})=>{
     p++;
-    return (<Cards4 key={p} email={email} startvalue={startvalue} endvalue={endvalue}/>)
+    return (<Cards4 key={p} label={label} email={email} code={qcode} startvalue={startvalue} endvalue={endvalue}/>)
   })}
 
         

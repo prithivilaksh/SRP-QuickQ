@@ -13,6 +13,10 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import date from 'date-and-time';
 import Timeline from './timeline'
 import firebase from "firebase/app";
+import { Timestamp } from "firebase/firestore";
+// import * as firebase from 'firebase/app'
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown'
  
  
 
@@ -25,6 +29,12 @@ export default function Addslots({qname,code}) {
  
   const { user, signup ,loading} = useAuth()
   const [times,settimes]=useState([]);
+  const [visible,setvisible]=useState(false);
+  const [val,setval]=useState("Select Label");
+  const [times2,settimes2]=useState([]);
+  const [labels,setlabels]=useState({});
+  const [labell,setlabell]=useState("");
+  const [factor,setfactor]=useState(0);
   useEffect(()=>
   {
           const q =  query(collection(db, "queues"), where("code", "==",code));
@@ -32,10 +42,11 @@ export default function Addslots({qname,code}) {
           const unsubscribe = onSnapshot(q, (querySnapshot) => 
           {
               querySnapshot.forEach((doc) => {
+                setlabels(doc.data().labels)
                 slots=doc.data().slots;
                 bookedslots=doc.data().bookedslots;
                 });
-              // console.log("value=================",value)
+              console.log("value=================",labels)
 
                 let res=[];
 
@@ -86,7 +97,40 @@ export default function Addslots({qname,code}) {
               settimes(res)
           })
           
-  },[])
+  },[factor,labell])
+
+  
+
+
+  const handleSelect=(e)=>{
+
+    console.log(labels[e])
+    setfactor(labels[e]);
+    setlabell(e)
+    console.log("hers is factor",factor)
+    setval(e)
+
+    let temp=[];
+    times.map((time)=>{
+
+      let k=time.endvalue.toDate();
+      k.setMinutes(k.getMinutes() - labels[e]);
+      let alpha=Timestamp.fromDate(new Date(k));
+      console.log("kilooooooooooooooooooooooooooooo",time.startvalue,alpha)
+      if(k.getTime() > time.startvalue.toDate().getTime())
+        temp.push({startvalue:time.startvalue,endvalue:alpha})
+    })
+
+    settimes2(temp)
+    setvisible(true)
+
+    // let tempk=temp;
+    // console.log("handle select triggered")
+    // if(temp)tempk=temp.slice();
+    // // settimes2(tempk)
+    // console.log(times2)
+
+  }
  
    
  
@@ -224,7 +268,27 @@ export default function Addslots({qname,code}) {
 `  
 }</style>
     {/* <br className="" /> <br className="" /> <br className="" /> <br className="" /> */}
-    <Timeline times={times} code={code} />
+    <div className='text-center'>
+    <DropdownButton
+
+      // className='btn-dark'
+      alignRight
+      id={`dropdown-variants-seconday`}
+      variant='secondary'
+      title={val}
+      
+      onSelect={handleSelect}
+    
+        >
+        {labels && Object.entries(labels).length>0 && Object.entries(labels).map((label)=>{
+          return <Dropdown.Item  key={label[0]} eventKey={label[0]} selected={true} >{label[0]} </Dropdown.Item>
+        })
+        }
+              
+        
+      </DropdownButton>
+      </div>
+    {visible && <Timeline times={times2} lab={labell} dur={factor} code={code} />}
 </>
   )
     }

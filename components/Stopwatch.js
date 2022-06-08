@@ -2,8 +2,16 @@ import { useEffect,useState } from 'react';
 import Timer from "./Timer";
 import ControlButtons from "./ControlButton";
 import Cards from "./Cards";
+import { useRouter } from 'next/router'
+import firebase from "firebase/app";
+import { doc,addDoc,getDocs,setDoc,getFirestore, collection,query,where } from "firebase/firestore";
+import { db } from "../firebase/initFirebase" 
+import { useAuth } from '../context/AuthContext'
   
-function StopWatch() {
+function StopWatch({label,code}) {
+
+  const { user, signup ,loading} = useAuth()
+  const router = useRouter()
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [time, setTime] = useState(0);
@@ -36,6 +44,40 @@ function StopWatch() {
     setIsActive(false);
     setTime(0);
   };
+
+
+
+  const addema=async (e)=>
+  {
+        e.preventDefault();
+        console.log(time)
+        // if(qname==''){seterror(true);return;}
+        // router.push('/yourqueues');
+
+      let requs,reqid;
+      const usersref = collection(db, "queues");
+      const q = query(usersref, where("code", "==",code));
+      const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          // console.log(doc.id, " => ", doc.data());
+          requs=doc.data();
+          reqid=doc.id;
+        });
+      console.log("sehereeeeeeeeeeeeee",requs,reqid)
+      // requs.label=
+      // console.log(label)
+      console.log(requs.labels,"kkkkkkkkkkkkkk")
+      let EMA = ((time)/(60*1000)) * 0.5 + (parseInt(requs.labels[label]) * (0.5))
+      requs.labels[label]=EMA;
+      console.log('EEEEEEEEEEEMMMMMMMMMMAAAAAAAAAAAAAA',EMA)
+    
+    
+      console.log(requs)
+      await setDoc(doc(db, "queues",reqid),requs);
+        
+  }
+
   
   return (
       <>
@@ -128,7 +170,7 @@ function StopWatch() {
   
      <form>
     <div className="btn">
-              <input type="submit" value="End Appointment"/>
+              <input type="submit" onClick={addema} value="End Appointment"/>
               </div>
   </form></div></center> </>
   );

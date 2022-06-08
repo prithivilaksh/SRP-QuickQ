@@ -17,7 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 
-const  Timeli= ({time,code}) => {
+const  Timeli= ({time,code,lab,dur}) => {
   const { user, signup ,loading} = useAuth()
   const router = useRouter()
     const go=()=>{
@@ -42,8 +42,10 @@ const  Timeli= ({time,code}) => {
           router.push('/')
           let dataobj={
             startvalue:value,
-            endvalue: date.addMinutes(value,20),
-            email:user.email                                         //will changeeeeeeeee in futureeeeeeeeee
+            endvalue: date.addMinutes(value,dur),
+            label:lab,
+            email:user.email,
+            qcode:code                                         //will changeeeeeeeee in futureeeeeeeeee
           }
           const q = query(collection(db, "queues"), where("code", "==",code));
           const querySnapshot = await getDocs(q);
@@ -66,7 +68,8 @@ const  Timeli= ({time,code}) => {
             qname:requs.qname,
             code:requs.code,
             startvalue:value,
-            endvalue: date.addMinutes(value,20)                                         //will changeeeeeeeee in futureeeeeeeeee
+            qcode:code,
+            endvalue: date.addMinutes(value,dur)                                        //will changeeeeeeeee in futureeeeeeeeee
           }
           const q0 = query(collection(db, "users"), where("email", "==",user.email));
           const querySnapshot0 = await getDocs(q0);

@@ -4,7 +4,7 @@ import Addslots from "../components/addslots";
 import Stopwatch from "./Stopwatch"
 import {useState} from 'react'
   
- function Cards4({startvalue,endvalue,email}) {
+ function Cards4({startvalue,endvalue,email,label,code}) {
   
   const [visible,setvisible]=useState(false);
   return (
@@ -91,7 +91,7 @@ import {useState} from 'react'
              </div>
       </div>
           {visible?<div className="">
-              <Stopwatch/>
+              <Stopwatch label={label} code={code}/>
           </div>:<></>}
     </>
   );

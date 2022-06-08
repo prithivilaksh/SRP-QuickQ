@@ -1,11 +1,10 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import { db } from "../firebase/initFirebase"
 import Link from 'next/link'
 import { useAuth } from '../context/AuthContext'
-import { doc, setDoc,addDoc,getDocs ,getFirestore } from "firebase/firestore";
-import { collection, query, where } from "firebase/firestore";
+import { doc, setDoc,addDoc,getDocs ,getFirestore,collection, query, where,onSnapshot  } from "firebase/firestore";
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -31,8 +30,10 @@ export default function Addslots({qname,code}) {
     const [minendtime,setminendtime]=useState(new Date(0,0,0,0,2));
     const [maxendtime,setmaxendtime]=useState(new Date(0,0,0,23,55));
 
+    
+
     let o=1;
-    const [labels,setlabels]=useState([]);
+    const [labels,setlabels]=useState({});
     const [tb2,settb2]=useState(20);
     const [tb1,settb1]=useState("");
    
@@ -94,14 +95,64 @@ export default function Addslots({qname,code}) {
       requs.slots=tsarr;
       requs.labels=labels
       await setDoc(doc(db, "queues",reqid),requs);
-      settsarr([]);setminstarttime(new Date(0,0,0,0,1));setminendtime(new Date(0,0,0,0,2));
+      // settsarr([]);setminstarttime(new Date(0,0,0,0,1));setminendtime(new Date(0,0,0,0,2));
       //-------------------------------------------------
       // db->queues-> where code==code add dataobj
   
       
       console.log("added into collection -pl        agaiiiiiin",requs)
   }
- 
+
+  useEffect(()=>
+    {
+            const q = query(collection(db, "queues"), where("code", "==",code));
+          
+            const unsubscribe = onSnapshot(q, (querySnapshot) => 
+            {
+                const k= [],p=[];
+                console.log("here we are",querySnapshot.docChanges()[0].type)
+                // if(querySnapshot.docChanges()[0].type=="added" || querySnapshot.docChanges()[0].type=="modified")
+                // {
+                        // console.log(i,"rendered") ;console.log(i,"rendered") 
+                        querySnapshot.forEach((doc) => {
+                        k=doc.data().labels
+                        let tem=[];
+                        doc.data().slots && doc.data().slots.map((slot)=>{
+                          tem.push({startvalue:slot.startvalue.toDate(),endvalue:slot.endvalue.toDate()})
+                        })
+                        p=tem;
+                        // setTestData((prev) => [...prev, doc.data()])
+                        // settsarr((prev)=>[...prev,p])
+                        // setlabels((prev)=>[...prev,k])
+                        // if(!(p.length === tsarr.length && p.every((value, index) => value === tsarr[index]))){console.log("not equal",p,tsarr);settsarr(p)}
+                        // if(!(k.length === labels.length && k.every((value, index) => value === labels[index]))){console.log("not equal",k,labels);setlabels(k)}
+                        // if(p!=tsarr){console.log("not equal",p,tsarr);}
+                        settsarr(p)
+                        if(p.length>0)
+                        {
+                          let lastval=date.addMinutes(p[p.length-1].endvalue,1);
+                          console.log('hola',p[p.length-1].endvalue)
+                          setminstarttime(lastval)
+                          setstartvalue(lastval)
+                          let lp1=date.addMinutes(lastval,1);
+                          setendvalue(lp1)
+                          setminendtime(lp1)
+                        }
+                        
+                        // if(labels!=k){console.log("not equal",k,labels);}
+                        setlabels(k)
+                       
+                        
+                    });
+                // }
+                
+                
+
+
+            })
+            // return () => unsubscribe()
+    },[])
+
     const addtoslots=()=>{
         // e.preventDefault();
         // console.log(startvalue>endvalue)
@@ -122,6 +173,7 @@ export default function Addslots({qname,code}) {
        
         setminstarttime(date.addMinutes(endvalue,1))
         setstartvalue(date.addMinutes(endvalue,1))
+      
         setendvalue(date.addMinutes(endvalue,2))
         // setstartvalue(new Date(date.addMinutes(endvalue,1)))
        
@@ -129,16 +181,16 @@ export default function Addslots({qname,code}) {
        
       }
   
-
+      let s=0;
       const addlabel=()=>{
         // e.preventDefault();
         // console.log(startvalue>endvalue)
         if(tb1=="") return;
         console.log("inside label func")
 
-        let temparr=[];
-        if(labels)temparr=labels.slice();
-        temparr.push({label:tb1,time:tb2});
+        let temparr={};
+        if(labels)temparr=labels;
+        temparr[tb1]=tb2;
         setlabels(temparr);
         settb1("");
         settb2(20);
@@ -284,14 +336,15 @@ export default function Addslots({qname,code}) {
 
     <div className=" container">
     <form className="form-inline">
-        <div className=" text-center form-group mb-2">
-          {labels.length>0 && <> Selected Labels </>} 
-          { labels && labels.map(({label,time})=>{
+        <div className=" text-center text-white form-group mb-2">
+          { labels && Object.entries(labels).length>0  && <> Selected Labels </>} 
+          {labels && Object.entries(labels).length>0 && Object.entries(labels).map((item)=>{
             o++;
-            return <div key={o}> {label} : {time}</div>
+            console.log(item)
+            return <div key={o}> {item[0]} : {item[1]}</div>
           })}
        </div>
-      <div className="form-group mx-sm-3 mb-2 ">
+      <div className="form-group mx-sm-3 mb-2 text-white ">
         <label  className="text-white ">Label</label>
         <input type="text" className="form-control" id="labelname" value={tb1} onChange={(e)=>{settb1(e.target.value)}} placeholder="Simply give a name" /><br></br>
         <label  className="text-white ">Time in minutes</label>
@@ -308,17 +361,20 @@ export default function Addslots({qname,code}) {
 
     </div>
 
-    {tsarr.length>0?<div className='txt-color-white'>
-        <p>selected slots</p> {tsarr.map((interval)=> {
+
+    
+    {tsarr.length>0?<div className=' text-center txt-color-white'>
+        <p>selected slots</p> {tsarr.length>0 && tsarr.map((interval)=> {
  
             let start=interval.startvalue;
             let end=interval.endvalue;
- 
-            return (<> {start.getHours()}:{start.getMinutes()} to {end.getHours()}:{end.getMinutes()} ,  </>)
+            s++;
+            return (< p key={s}> {start.getHours()}:{start.getMinutes()} to {end.getHours()}:{end.getMinutes()} ,  </p>)
         })}
     </div>:<></>}
         <br></br>
     <div className="container">
+    
             <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3}>
             <TimePicker
@@ -354,10 +410,11 @@ export default function Addslots({qname,code}) {
              </Stack>
     </LocalizationProvider>
     <br></br>
+    <div className="text-center">
     <button type="button" className="btn btn-dark mx-2" onClick={addtoslots} >add</button> 
     <button type="button" className="btn btn-dark mx-2" onClick={addslotstodb} > submit</button>
     <button type="button" className="btn btn-dark mx-2" onClick={()=>{settsarr([]);setminstarttime(new Date(0,0,0,0,1));setminendtime(new Date(0,0,0,0,2));}} >clear</button>
-    
+    </div>
     </div>
 
     {/* <div className="container">
