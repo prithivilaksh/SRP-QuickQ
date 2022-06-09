@@ -28,6 +28,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 export default function Addslots({qname,code}) {
  
   const { user, signup ,loading} = useAuth()
+  let k={};
   const [times,settimes]=useState([]);
   const [visible,setvisible]=useState(false);
   const [val,setval]=useState("Select Label");
@@ -43,6 +44,9 @@ export default function Addslots({qname,code}) {
           {
               querySnapshot.forEach((doc) => {
                 setlabels(doc.data().labels)
+                k=doc.data().labels;
+                
+                console.log("holaaaaaaaaaaaaaa",k)
                 slots=doc.data().slots;
                 bookedslots=doc.data().bookedslots;
                 });
@@ -96,7 +100,10 @@ export default function Addslots({qname,code}) {
               console.log("res====",res)
               // settimes2(res)
               settimes(res)
-              if(labels[val])handleSelect(val)
+              if(k[val])handleSelect(val);
+              else{console.log("correct error")}
+              console.log("helooooo",k)
+              
           })
           
   },[])
