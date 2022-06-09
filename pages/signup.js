@@ -6,8 +6,9 @@ import { useAuth } from '../context/AuthContext'
 import { useRouter } from 'next/router'
 
 const Signup = () => {
-  const { user, signup ,loading} = useAuth()
+  const { user, signup ,loading,online} = useAuth()
   const router=useRouter()
+  const [error,seterror]=useState(false)
   console.log(user)
   const [data, setData] = useState({
     email: '',
@@ -38,6 +39,7 @@ const Signup = () => {
       
       router.push('/dashboard')
     } catch (err) {
+      seterror(true);
       console.log(err)
     }
 
@@ -287,12 +289,12 @@ form .btn:hover .btn-layer{
             type="email"
             placeholder="Enter email"
             required
-            onChange={(e) =>
+            onChange={(e) =>{{seterror(false);}
               setData({
                 ...data,
                 email: e.target.value,
               })
-            }
+            }}
             value={data.email}
           />
         </Form.Group>
@@ -303,11 +305,11 @@ form .btn:hover .btn-layer{
             type="password"
             placeholder="Password"
             required
-            onChange={(e) =>
-              setData({
+            onChange={(e) =>{seterror(false);setData({
                 ...data,
                 password: e.target.value,
-              })
+              })}
+              
             }
             value={data.password}
           />
@@ -317,7 +319,8 @@ form .btn:hover .btn-layer{
 </div>
 
       </Form>
-    </div></div></div></main>
+    </div>{error &&<h4 className='text-center font-weight-bold text-danger'><br />Error</h4>}
+    </div></div></main>
     }
     </>
     

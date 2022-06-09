@@ -10,54 +10,57 @@ import { collection, query, where } from "firebase/firestore";
 
 export default function Subscribe() {
 
-  const { user, signup ,loading} = useAuth()
+  const { user, signup ,loading,online} = useAuth()
   const router = useRouter()
   const [error,seterror]=useState(false)
     const [qcode,setqcode]=useState("");
   const addqtouserhissubq=async (e)=>
   {
         e.preventDefault();
-        if(qcode==''){seterror(true);return;}
+        if(qcode=='' || !online()){console.log('offlone');seterror(true);return;}
+        else{
+          const dataobj={
+            code:qcode
+          };
+  
+        let flag=false;
+        const q0=query(collection(db,"queues"), where("code", "==",qcode));
+        const querySnapshot0 = await getDocs(q0);
+        querySnapshot0.forEach((doc) => {
+          // if that queue exists in the list of queues
+          dataobj.qname=doc.data().qname
+          flag=true;
+          router.push('/queues');
+        
+        });
+        
+  
+        if(flag)
+        {
+      
+                  let requs,reqid,arr=[dataobj];
+                  const usersref = collection(db, "users");
+                  const q = query(usersref, where("email", "==",user.email));
+                  const querySnapshot = await getDocs(q);
+                  querySnapshot.forEach((doc) => {
+                      // doc.data() is never undefined for query doc snapshots
+                      // console.log(doc.id, " => ", doc.data());
+                      requs=doc.data();
+                      reqid=doc.id;
+                    });
+                  // console.log("sehereeeeeeeeeeeeee",requs,reqid)
+                  if(requs.hisubqueue)arr = arr.concat(requs.hisubqueue);
+                  requs.hisubqueue=arr;
+                  console.log("holaaaaaaaaaaaaaaaaaaaa",requs)
+                  console.log("hola")
+                  await setDoc(doc(db,"users",reqid),requs);
+                  console.log("subscribed to a queue ")
+        }
+        else seterror(true);
+        }
       
 
-        const dataobj={
-          code:qcode
-        };
 
-      let flag=false;
-      const q0=query(collection(db,"queues"), where("code", "==",qcode));
-      const querySnapshot0 = await getDocs(q0);
-      querySnapshot0.forEach((doc) => {
-        // if that queue exists in the list of queues
-        dataobj.qname=doc.data().qname
-        flag=true;
-        router.push('/queues');
-      
-      });
-      
-
-      if(flag)
-      {
-    
-                let requs,reqid,arr=[dataobj];
-                const usersref = collection(db, "users");
-                const q = query(usersref, where("email", "==",user.email));
-                const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => {
-                    // doc.data() is never undefined for query doc snapshots
-                    // console.log(doc.id, " => ", doc.data());
-                    requs=doc.data();
-                    reqid=doc.id;
-                  });
-                // console.log("sehereeeeeeeeeeeeee",requs,reqid)
-                if(requs.hisubqueue)arr = arr.concat(requs.hisubqueue);
-                requs.hisubqueue=arr;
-                console.log("holaaaaaaaaaaaaaaaaaaaa",requs)
-                console.log("hola")
-                await setDoc(doc(db,"users",reqid),requs);
-                console.log("subscribed to a queue ")
-      }
-      else seterror(true);
 
       // else errormsg
 

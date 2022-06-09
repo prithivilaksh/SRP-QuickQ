@@ -12,7 +12,7 @@ import { collection, query, where } from "firebase/firestore";
 
 export default function Createqueue() {
 
-  const { user, signup ,loading} = useAuth()
+  const { user, signup ,loading,online} = useAuth()
   const router = useRouter()
     const [qname,setqname]=useState("");
     const [error,seterror]=useState(false)
@@ -20,8 +20,34 @@ export default function Createqueue() {
 
     const addqtouserandq=async (e)=>
     {
-          e.preventDefault();
-          if(qname==''){seterror(true);return;}
+      e.preventDefault();
+        console.log("online",online())
+        if(!online()) {seterror(true);return;}  
+        else if(qname==''){seterror(true);return;}
+        else{
+          let requs,reqid,arr=[dataobj];
+          const usersref = collection(db, "users");
+          const q = query(usersref, where("email", "==",user.email));
+          const querySnapshot = await getDocs(q);
+              querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              // console.log(doc.id, " => ", doc.data());
+              requs=doc.data();
+              reqid=doc.id;
+            });
+          console.log("sehereeeeeeeeeeeeee",requs,reqid)
+          if(requs.hisqueue)
+            arr = arr.concat(requs.hisqueue);
+          requs.hisqueue=arr;
+        
+        
+                console.log(requs)
+                    await setDoc(doc(db, "users",reqid),requs);
+                    await addDoc(collection(db, "queues"),dataobj);
+                    // await addDoc(collection(db, "user"),dataobj);
+                    
+                    console.log("added qcode and name into user and queue collection -pl")
+        }
           router.push('/yourqueues');
           var uniq = 'id' + (new Date()).getTime().toString().slice(5);
 
@@ -30,28 +56,7 @@ export default function Createqueue() {
             qname:qname
         };
 
-        let requs,reqid,arr=[dataobj];
-        const usersref = collection(db, "users");
-        const q = query(usersref, where("email", "==",user.email));
-        const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            // console.log(doc.id, " => ", doc.data());
-            requs=doc.data();
-            reqid=doc.id;
-          });
-        console.log("sehereeeeeeeeeeeeee",requs,reqid)
-        if(requs.hisqueue)
-          arr = arr.concat(requs.hisqueue);
-        requs.hisqueue=arr;
-      
-      
-              console.log(requs)
-                  await setDoc(doc(db, "users",reqid),requs);
-                  await addDoc(collection(db, "queues"),dataobj);
-                  // await addDoc(collection(db, "user"),dataobj);
-                  
-                  console.log("added qcode and name into user and queue collection -pl")
+        
           
     }
 

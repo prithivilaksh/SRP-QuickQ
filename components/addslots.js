@@ -15,7 +15,7 @@ import date from 'date-and-time';
  
 export default function Addslots({qname,code}) {
  
-  const { user, signup ,loading} = useAuth()
+  const { user, signup ,loading,online} = useAuth()
     // const [qname,setqname]=useState("");
     const [tsarr,settsarr]=useState([]);
  
@@ -81,7 +81,9 @@ export default function Addslots({qname,code}) {
 
     const addslotstodb=async (e) =>{
  
-      
+      if(!online()){alert("your are offline");return;}
+        else
+        {
       const q = query(collection(db, "queues"), where("code", "==",code));
       const querySnapshot = await getDocs(q);
       let requs={},reqid;
@@ -101,6 +103,7 @@ export default function Addslots({qname,code}) {
   
       
       console.log("added into collection -pl        agaiiiiiin",requs)
+    }
   }
 
   useEffect(()=>
@@ -156,28 +159,31 @@ export default function Addslots({qname,code}) {
     const addtoslots=()=>{
         // e.preventDefault();
         // console.log(startvalue>endvalue)
-        if(!startvalue || !endvalue || startvalue.getTime() >endvalue.getTime() || startvalue.getTime()>maxstarttime.getTime())return ;
-        const dataobj={
-            startvalue,
-            endvalue
-        };
-        let arr=[];
-        if(tsarr)arr=tsarr.slice();
-        arr.push(dataobj);
-        settsarr(arr)
-        // setprevendvalue(new Date(endvalue+600000000000000000000));
+        
+          if(!startvalue || !endvalue || startvalue.getTime() >endvalue.getTime() || startvalue.getTime()>maxstarttime.getTime())return ;
+          const dataobj={
+              startvalue,
+              endvalue
+          };
+          let arr=[];
+          if(tsarr)arr=tsarr.slice();
+          arr.push(dataobj);
+          settsarr(arr)
+          // setprevendvalue(new Date(endvalue+600000000000000000000));
+         
+          // let tempmin=[new Date(date.addMinutes(endvalue,1)),new Date(0,0,0,23,58)]
+          // console.log("see this",new Date(Math.min(...tempmin)))
+          // setminstarttime(new Date(Math.min(...tempmin)))
+         
+          setminstarttime(date.addMinutes(endvalue,1))
+          setstartvalue(date.addMinutes(endvalue,1))
+        
+          setendvalue(date.addMinutes(endvalue,2))
+          // setstartvalue(new Date(date.addMinutes(endvalue,1)))
+         
+          console.log('array=',tsarr)
+        
        
-        // let tempmin=[new Date(date.addMinutes(endvalue,1)),new Date(0,0,0,23,58)]
-        // console.log("see this",new Date(Math.min(...tempmin)))
-        // setminstarttime(new Date(Math.min(...tempmin)))
-       
-        setminstarttime(date.addMinutes(endvalue,1))
-        setstartvalue(date.addMinutes(endvalue,1))
-      
-        setendvalue(date.addMinutes(endvalue,2))
-        // setstartvalue(new Date(date.addMinutes(endvalue,1)))
-       
-        console.log('array=',tsarr)
        
       }
   

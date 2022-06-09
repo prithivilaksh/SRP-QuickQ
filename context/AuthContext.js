@@ -31,6 +31,9 @@ export const AuthContextProvider = ({children}) => {
   const signup = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password)
   }
+  const online=()=> {
+    return window.navigator.onLine
+  }
 
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password)
@@ -43,7 +46,7 @@ export const AuthContextProvider = ({children}) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout ,loading}}>
+    <AuthContext.Provider value={{ user, login, signup, logout ,loading,online}}>
       {loading ? <h1> Loading........</h1>: children}
     </AuthContext.Provider>
   )

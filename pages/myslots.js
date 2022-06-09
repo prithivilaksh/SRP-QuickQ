@@ -11,7 +11,7 @@ export default function Myslots() {
 
     let p=0;
   const [qarray,setqarray]=useState([])
-  const { user, signup ,loading} = useAuth()
+  const { user, signup ,loading,online} = useAuth()
   const [qus,setqus]=useState([])
   
 

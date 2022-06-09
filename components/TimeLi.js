@@ -18,7 +18,7 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 
 const  Timeli= ({time,code,lab,dur}) => {
-  const { user, signup ,loading} = useAuth()
+  const { user, signup ,loading,online} = useAuth()
   const router = useRouter()
     const go=()=>{
         setVisible(true);
@@ -38,84 +38,94 @@ const  Timeli= ({time,code,lab,dur}) => {
 
       const addtimetobookedslots=async()=>
       {
-
-          router.push('/')
-          let dataobj={
-            startvalue:value,
-            endvalue: date.addMinutes(value,dur),
-            label:lab,
-            email:user.email,
-            qcode:code                                         //will changeeeeeeeee in futureeeeeeeeee
+          if(!online()){alert("you are offline");return;}
+          else{
+            router.push('/')
+            let dataobj={
+              startvalue:value,
+              endvalue: date.addMinutes(value,dur),
+              label:lab,
+              email:user.email,
+              qcode:code                                         //will changeeeeeeeee in futureeeeeeeeee
+            }
+            const q = query(collection(db, "queues"), where("code", "==",code));
+            const querySnapshot = await getDocs(q);
+            let requs={},reqid;
+              querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              // console.log(doc.id, " => ", doc.data());
+              requs=doc.data();
+              reqid=doc.id;
+            });
+  
+            
+  
+            if(requs.bookedslots)requs.bookedslots.push(dataobj);
+            else requs.bookedslots=[dataobj];
+            
+            await setDoc(doc(db, "queues",reqid),requs);
+  
+            let dataobj0={
+              qname:requs.qname,
+              code:requs.code,
+              startvalue:value,
+              qcode:code,
+              endvalue: date.addMinutes(value,dur)                                        //will changeeeeeeeee in futureeeeeeeeee
+            }
+            const q0 = query(collection(db, "users"), where("email", "==",user.email));
+            const querySnapshot0 = await getDocs(q0);
+            let requs0={},reqid0;
+              querySnapshot0.forEach((doc) => {
+              requs0=doc.data();
+              reqid0=doc.id;
+            });
+  
+            if(requs0.bookedslots)requs0.bookedslots.push(dataobj0);
+            else requs0.bookedslots=[dataobj0];
+            
+            if(reqid0){
+            await setDoc(doc(db, "users",reqid0),requs0);
+            console.log("booked appointment",reqid0)
+            }
+            else console.log("appointment not booked")
           }
-          const q = query(collection(db, "queues"), where("code", "==",code));
-          const querySnapshot = await getDocs(q);
-          let requs={},reqid;
-            querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            // console.log(doc.id, " => ", doc.data());
-            requs=doc.data();
-            reqid=doc.id;
-          });
-
-          
-
-          if(requs.bookedslots)requs.bookedslots.push(dataobj);
-          else requs.bookedslots=[dataobj];
-          
-          await setDoc(doc(db, "queues",reqid),requs);
-
-          let dataobj0={
-            qname:requs.qname,
-            code:requs.code,
-            startvalue:value,
-            qcode:code,
-            endvalue: date.addMinutes(value,dur)                                        //will changeeeeeeeee in futureeeeeeeeee
-          }
-          const q0 = query(collection(db, "users"), where("email", "==",user.email));
-          const querySnapshot0 = await getDocs(q0);
-          let requs0={},reqid0;
-            querySnapshot0.forEach((doc) => {
-            requs0=doc.data();
-            reqid0=doc.id;
-          });
-
-          if(requs0.bookedslots)requs0.bookedslots.push(dataobj0);
-          else requs0.bookedslots=[dataobj0];
-          
-          if(reqid0){
-          await setDoc(doc(db, "users",reqid0),requs0);
-          console.log("booked appointment",reqid0)
-          }
-          else console.log("appointment not booked")
+        
         }
 
 
 
 
-      return( <>
+      return( <div className='text-center'>
 
      
                   
-                  <TimelineItem >
+                  <TimelineItem  sx={{width: 700,
+    // color: 'success.main',
+  }}>
                       {/* <TimelineOppositeContent color="text.secondary">
                           {time}
                       </TimelineOppositeContent> */}
                     
                       <ClickAwayListener onClickAway={handleClickAway}>
                       <TimelineSeparator >
-                            <TimelineDot />
+                            {!visible && <TimelineDot />}
                             
                             <>
 
                           
 
-                            <TimelineConnector onClick={()=>go()}>
-                          {visible && <>
-                              
+                            {!visible &&<TimelineConnector onClick={()=>go()}sx={{width: 8}}>
+                          
+                                      
+                            </TimelineConnector>}
+
+                            {visible && <div className='text-center'>
+                              <br />
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <Stack spacing={10}>
+                                <Stack spacing={4}>
                                 <TimePicker
-                                renderInput={(params) => <TextField {...params} />}
+                                
+                                renderInput={(params) => <TextField {...params} {...params} sx={{svg: { color: 'black' },input: { color: 'white' },label: { color: 'white' },width: 150}} />}
                                 value={value}
                                 label="Start time"
                                 onChange={(newValue) => {
@@ -127,20 +137,23 @@ const  Timeli= ({time,code,lab,dur}) => {
                               </Stack>
                               </LocalizationProvider>
                               
-                                      </>}
-                                      
-                            </TimelineConnector>
-                           {visible && <input type="button" onClick={addtimetobookedslots} value ="book slot" className="" />} 
+                                      </div>}
+                            {visible &&
+                            <div className='text-center'>
+                            <br />
+                             <input type="button" onClick={addtimetobookedslots} value ="book slot" className="btn btn-dark" />
+                            </div>
+                          }
                             </>
                             
                            
                       </TimelineSeparator>
                       </ClickAwayListener>
                       {/* {visible && } */}
-                      <TimelineContent>{a} - {b} value selected : {c}</TimelineContent>
+                      <TimelineContent sx={{ p:3}}><div className='text-center'>{a} - {b} value selected : {c}</div></TimelineContent>
                   </TimelineItem>
                      
-                  </>
+                  </div>
               )
 }
  
