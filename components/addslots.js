@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import {useState,useEffect} from 'react'
 import { db } from "../firebase/initFirebase"
 import Link from 'next/link'
@@ -16,6 +17,7 @@ import date from 'date-and-time';
 export default function Addslots({qname,code}) {
  
   const { user, signup ,loading,online} = useAuth()
+  const router = useRouter()
     // const [qname,setqname]=useState("");
     const [tsarr,settsarr]=useState([]);
  
@@ -84,6 +86,8 @@ export default function Addslots({qname,code}) {
       if(!online()){alert("your are offline");return;}
         else
         {
+        
+        
       const q = query(collection(db, "queues"), where("code", "==",code));
       const querySnapshot = await getDocs(q);
       let requs={},reqid;
@@ -101,7 +105,7 @@ export default function Addslots({qname,code}) {
       //-------------------------------------------------
       // db->queues-> where code==code add dataobj
   
-      
+      router.reload(window.location.pathname)
       console.log("added into collection -pl        agaiiiiiin",requs)
     }
   }

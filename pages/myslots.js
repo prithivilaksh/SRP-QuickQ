@@ -50,7 +50,7 @@ export default function Myslots() {
             
   },[])
 
-
+  
   useEffect(()=>{
 
 
@@ -74,13 +74,13 @@ export default function Myslots() {
                           
                         ires=doco.data().bookedslots;
                         // console.log("sannnnnnnnnnuuuuuu",ires)
-                        if(res.length>0){res=res.concat(ires);}
-                        else {res=ires;}
-                        // console.log("sannnnnnnnnnuuuu",res)
+                        if(doco.data().bookedslots && res){res=res.concat(doco.data().bookedslots);}
+                        // else {res=doco.data().bookedslots;}
+                        console.log("sannnnnnnnnnuuuu",doco.data().bookedslots)
                         
 
                     
-                          if(res.length>0)
+                          if(res )
                               {res.sort(function ( a, b ) 
                               {
                                 // console.log(a);
@@ -96,15 +96,23 @@ export default function Myslots() {
                     let unique = [...new Set(res)];
                     let i=0;
                     let today=new Date();
-                    console.log(unique[0].endvalue.toDate().getHours(),"asasasas")
-                    while(i<unique.length && (unique[i].endvalue.toDate().getHours() < today.getHours()-1 ))
+                    // console.log(unique[0].endvalue.toDate().getHours(),"asasasas")
+                    while(i<unique.length && (unique[i] && unique[i].endvalue.toDate().getHours() < today.getHours()-1 ))
                     {
+                      console.log(i,"iiiiiiiiiii")
                         i++;
                     }
 
                     let ans =[];
                     if(i<unique.length)
                      ans=unique.slice(i, unique.length);
+
+
+                     function getUniqueListBy(arr, key) {
+                      return [...new Map(arr.map(item => [item[key], item])).values()]
+                  }
+                  
+                    ans = getUniqueListBy(ans, 'endvalue')
 
                     setqarray(ans); 
                     // setqarray(res); 

@@ -17,7 +17,7 @@ export default function Subscribe() {
   const addqtouserhissubq=async (e)=>
   {
         e.preventDefault();
-        if(qcode=='' || !online()){console.log('offlone');seterror(true);return;}
+        if(qcode=='' || !online()){console.log('offline');seterror(true);return;}
         else{
           const dataobj={
             code:qcode

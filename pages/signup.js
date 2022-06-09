@@ -28,7 +28,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (user) {
-      router.push('/dashboard')
+      router.push('/queues')
     }
   }, [user,router])
   const handleSignup = async (e) => {
@@ -37,7 +37,7 @@ const Signup = () => {
     try {
       await signup(data.email, data.password).then(()=> {createuser(data.email)})
       
-      router.push('/dashboard')
+      router.push('/queues')
     } catch (err) {
       seterror(true);
       console.log(err)

@@ -13,10 +13,10 @@ export default function Yourslots() {
   const [qarray,setqarray]=useState([])
   const { user, signup ,loading} = useAuth()
   
-  
+  let qu=[];
   useEffect(()=>
   {
-          let qu=[];
+          
           const q = query(collection(db, "users"),where("email", "==",user.email));
           const unsubscribe = onSnapshot(q, (querySnapshot) => 
           {
@@ -27,7 +27,7 @@ export default function Yourslots() {
               });
 
 
-              if(qu.length>0)
+              if(qu && qu.length>0)
                 {qu.sort(function ( a, b ) 
                   {
                     // console.log(a);
@@ -35,25 +35,27 @@ export default function Yourslots() {
                       if ( a.endvalue.toDate() > b.endvalue.toDate() )return 1;
                       return 0;
                   });
+
+                  console.log("===============================",qu)
+                  let unique = [...new Set(qu)];
+            let i=0;
+            let today=new Date();
+            console.log(qu,"asasasas")
+            while(i<unique.length && (unique[i].endvalue.toDate().getHours() < today.getHours() -1))
+            {
+                i++;
+            }
+
+            let ans =[];
+            if(i<unique.length)
+             ans=unique.slice(i, unique.length);
+
+            setqarray(ans); 
+
+      console.log("this is what u r looking for",qu);
+                  
                 }
-                          console.log("===============================",qu)
-                          let unique = [...new Set(qu)];
-                    let i=0;
-                    let today=new Date();
-                    console.log(qu,"asasasas")
-                    while(i<unique.length && (unique[i].endvalue.toDate().getHours() < today.getHours() -1))
-                    {
-                        i++;
-                    }
-
-                    let ans =[];
-                    if(i<unique.length)
-                     ans=unique.slice(i, unique.length);
-
-                    setqarray(ans); 
-
-              console.log("this is what u r looking for",qu);
-                          
+                         
                         
           });
                     
