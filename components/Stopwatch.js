@@ -50,7 +50,8 @@ function StopWatch({label,code}) {
   const addema=async (e)=>
   {
         e.preventDefault();
-        console.log(time)
+        // console.log(time)
+      router.push('/queues')
         // if(qname==''){seterror(true);return;}
         // router.push('/yourqueues');
 

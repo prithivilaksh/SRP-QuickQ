@@ -12,57 +12,111 @@ export default function Myslots() {
     let p=0;
   const [qarray,setqarray]=useState([])
   const { user, signup ,loading} = useAuth()
+  const [qus,setqus]=useState([])
   
+
   
+  // let temp=[];
+  // let res=[];
+  let temp=[];
+  // let res=[];
   useEffect(()=>
   {
+          
           const q = query(collection(db, "users"),where("email", "==",user.email));
           const unsubscribe = onSnapshot(q, (querySnapshot) => 
           {
-                let qus=[];let res=[],ires;
+                  // let i=1;
                 querySnapshot.forEach((doc) => 
                 {
-                    console.log(doc.id);
-                    qus=doc.data().hisqueue;
-                    
-                    qus && qus.map((qu)=>
-                    {
+                    // console.log(doc.id);
+                    // console.log(doc.data().hisqueue,"kkkk")
+                    // console.log(i);i++;
+                    let c=doc.data().hisqueue;
+                    console.log("his queue",c)
+                    // if(temp.length>0)temp=temp.concat(c);
 
-                        const quer = query(collection(db, "queues"),where("code", "==",qu.code));
-                        const unsubscribe0 = onSnapshot(quer, (querSnapshot) => 
-                        {
-                            
-                            querSnapshot.forEach((doco) => 
-                            {
-                                console.log(doco.id)
-                                ires=doco.data().bookedslots;
-                                console.log("sannnnnnnnnn",ires)
-                                if(ires)res=res.concat(ires);
-                                console.log("sannnnnnnnnn",res)
-                                function compare( a, b ) 
-                                {
-                                    if ( a.endvalue.toDate() < b.endvalue.toDate() ) return -1;
-                                    if ( a.endvalue.toDate() > b.endvalue.toDate() )return 1;
-                                    return 0;
-                                  }
-                                  
-                                  if(res)res.sort(compare);
-                                  setqarray(res); 
-                                
-                            });
-                            
-                        })
-                        // console.log("sanjeeeeeeeeeeeeeeeeeeeeeeeeeeeeet",res)
-                        // setqarray(res); 
-                    })
+                    // if(temp.length>0)temp = [...temp, ...c];
+                    console.log("cccccccccccc",c)
+                    temp=[...c];
+                    setqus(temp)
+                    console.log(temp);
                 });
                 
-            //   if(qu)setqarray(qu)
-            //   console.log("this is what u r looking for",qu)
+                // setqus(temp)
+                // console.log("loook here",qus)
                 
           })
-          
+            
   },[])
+
+
+  useEffect(()=>{
+
+
+    let res=[];
+    console.log("here is quuuuuuuuuus",qus)
+    qus.map((qu)=>
+            {
+              console.log(qu,"heeeeeeeeeeeeeeeeeeeheeeeeeeee")
+                
+              
+                const quer = query(collection(db, "queues"),where("code", "==",qu.code));
+                const unsubscribe0 = onSnapshot(quer, (querSnapshot) => 
+                {
+                  // console.log("---------------=============================================================",res)
+                  let ires=[];
+                  
+                    querSnapshot.forEach((doco) => 
+                    {
+                        console.log(doco.id)
+                        
+                          
+                        ires=doco.data().bookedslots;
+                        // console.log("sannnnnnnnnnuuuuuu",ires)
+                        if(res.length>0){res=res.concat(ires);}
+                        else {res=ires;}
+                        // console.log("sannnnnnnnnnuuuu",res)
+                        
+
+                    
+                          if(res.length>0)
+                              {res.sort(function ( a, b ) 
+                              {
+                                // console.log(a);
+                                  if ( a.endvalue.toDate() < b.endvalue.toDate() ) return -1;
+                                  if ( a.endvalue.toDate() > b.endvalue.toDate() )return 1;
+                                  return 0;
+                              });
+                              }
+                          console.log("===============================",res)
+                          
+                        
+                    });
+                    let unique = [...new Set(res)];
+                    let i=0;
+                    let today=new Date();
+                    console.log(unique[0].endvalue.toDate().getHours(),"asasasas")
+                    while(i<unique.length && (unique[i].endvalue.toDate().getHours() < today.getHours() || (unique[i].endvalue.toDate().getHours() == today.getHours() && unique[i].endvalue.toDate().getMinutes() < today.getMinutes())))
+                    {
+                        i++;
+                    }
+
+                    let ans =[];
+                    if(i<unique.length)
+                     ans=unique.slice(i, unique.length);
+
+                    setqarray(ans); 
+                    // setqarray(res); 
+                    
+                })
+                // console.log("sanjeeeeeeeeeeeeeeeeeeeeeeeeeeeeet",res)
+                // setqarray(res); 
+            })
+
+  },[qus])
+
+  // console.log(qarray,"this is what u r lookig for")
 
 
 
@@ -166,7 +220,7 @@ export default function Myslots() {
 `   
 }</style>
 <main className="main" >
-
+  
   {qarray && qarray.map(({email,startvalue,endvalue,label,qcode})=>{
     p++;
     return (<Cards4 key={p} label={label} email={email} code={qcode} startvalue={startvalue} endvalue={endvalue}/>)
