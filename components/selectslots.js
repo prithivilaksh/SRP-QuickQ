@@ -95,6 +95,7 @@ export default function Addslots({qname,code}) {
                 else res=slots;
               console.log("res====",res)
               settimes2(res)
+              settimes(res)
           })
           
   },[])
