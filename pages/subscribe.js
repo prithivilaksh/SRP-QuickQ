@@ -51,6 +51,13 @@ export default function Subscribe() {
                   // console.log("sehereeeeeeeeeeeeee",requs,reqid)
                   if(requs.hisubqueue)arr = arr.concat(requs.hisubqueue);
                   requs.hisubqueue=arr;
+                  // requs.hisubqueue=[...new Set(requs.hisubqueue)]
+                  // requs.hisubqueue.filter((v,i,a)=>a.findIndex(v2=>(JSON.stringify(v2) === JSON.stringify(v)))===i)
+                  function getUniqueListBy(arr, key) {
+                    return [...new Map(arr.map(item => [item[key], item])).values()]
+                }
+                
+                  requs.hisubqueue = getUniqueListBy(requs.hisubqueue, 'code')
                   console.log("holaaaaaaaaaaaaaaaaaaaa",requs)
                   console.log("hola")
                   await setDoc(doc(db,"users",reqid),requs);
