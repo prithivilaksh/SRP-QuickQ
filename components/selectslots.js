@@ -94,10 +94,11 @@ export default function Addslots({qname,code}) {
                 }
                 else res=slots;
               console.log("res====",res)
-              settimes(res)
+              settimes2(res)
           })
           
   },[])
+// },[factor,labell])
 
   
 
