@@ -41,7 +41,7 @@ export default function Yourslots() {
                     let i=0;
                     let today=new Date();
                     console.log(qu,"asasasas")
-                    while(i<unique.length && (unique[i].endvalue.toDate().getHours() < today.getHours() || (unique[i].endvalue.toDate().getHours() == today.getHours() && unique[i].endvalue.toDate().getMinutes() < today.getMinutes())))
+                    while(i<unique.length && (unique[i].endvalue.toDate().getHours() < today.getHours() -1))
                     {
                         i++;
                     }
