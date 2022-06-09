@@ -36,8 +36,8 @@ export default function Yourqueues() {
   return (
     <>
     <style>{
- `.container {
-  padding: 0 2rem;
+      `.container {
+ // padding:0 2rem;
   
 }
 .bttt{
@@ -47,7 +47,7 @@ export default function Yourqueues() {
 
 .main {
   min-height: 90vh;
-  padding: 3rem;
+  //padding: 3rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -58,21 +58,21 @@ export default function Yourqueues() {
   
 }
 
-.footer {
-  display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
-}
+// .footer {
+//   display: flex;
+//   flex: 1;
+//   padding: 2rem 0;
+//   border-top: 1px solid #eaeaea;
+//   justify-content: center;
+//   align-items: center;
+// }
 
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-}
+// .footer a {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-grow: 1;
+// }
 
 .title a {
   color: #0070f3;
@@ -116,7 +116,7 @@ export default function Yourqueues() {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
+ max-width: 800px;
 }
 
 .logo {

@@ -40,7 +40,7 @@ const  Timeli= ({time,code,lab,dur}) => {
       {
           if(!online()){alert("you are offline");return;}
           else{
-            router.push('/')
+            router.push('/yourslots')
             let dataobj={
               startvalue:value,
               endvalue: date.addMinutes(value,dur),

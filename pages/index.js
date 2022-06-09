@@ -17,7 +17,7 @@ export default function Home() {
   const a=1
   useEffect(() => {
     if (!user) router.push('/login')
-    else router.push('/dashboard')
+    else router.push('/queues')
     
   }, [])
   return (

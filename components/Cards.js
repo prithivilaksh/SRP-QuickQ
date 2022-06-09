@@ -52,7 +52,7 @@ import {useState} from 'react'
             border: 3px solid #eaeaea;
             border-radius: 10px;
             transition: color 0.15s ease, border-color 0.15s ease;
-            max-width: 400px;
+            max-width: 300px;
           }
           .card:hover {
             transform: scale(1.2);

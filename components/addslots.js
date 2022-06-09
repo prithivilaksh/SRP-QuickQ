@@ -206,8 +206,8 @@ export default function Addslots({qname,code}) {
   return (
     <>
     <style>{
- `.container {
-  padding: 0 2rem;
+      `.container {
+  //padding: 0 2rem;
 }
 .bttt{
     margin-top:50px;
@@ -215,7 +215,7 @@ export default function Addslots({qname,code}) {
 }
 .main {
   min-height: 100vh;
-  padding: 4rem 0;
+  //padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;

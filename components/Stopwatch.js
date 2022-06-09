@@ -117,7 +117,7 @@ function StopWatch({label,code}) {
               
             }
             .container {
-    padding:20px 50px 15px 50px;;
+    //padding:20px 50px 15px 50px;;
   }
   form .btn{
     height: 50px;
