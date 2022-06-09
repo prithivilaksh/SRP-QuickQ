@@ -2,18 +2,18 @@ import React from "react";
   
 export default function ControlButtons(props) {
   const StartButton = (
-    <div className="btn btn-one btn-start"
+    <div className="btno btn-one"
          onClick={props.handleStart}>
       Start
     </div>
   );
   const ActiveButtons = (
     <div className="btn-grp">
-      <div className="btn btn-one" 
+      <div className="btno btn-one" 
            onClick={props.handleReset}>
         Reset
       </div>
-      <div className="btn btn-one" 
+      <div className="btno btn-one" 
            onClick={props.handlePauseResume}>
         {props.isPaused ? "Resume" : "Pause"}
       </div>
@@ -37,9 +37,17 @@ export default function ControlButtons(props) {
                 display: flex;
                 align-items: center;
                 justify-content: space-around;
+             
+                }
+
+                .xx{
+                  padding-top: 10px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+                padding-left: 10px;
                 }
                 
-                .btn {
+                .btno {
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
                 width: 14vw;
                 height: 6vh;
@@ -55,8 +63,8 @@ export default function ControlButtons(props) {
   
             .btn-one{
                 background-color: #000000;
-                width: 20vw;
-                height: 6vh;
+                width: 12vw;
+                height: 8vh;
             }
           `}
       </style>

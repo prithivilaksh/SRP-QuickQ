@@ -161,7 +161,7 @@ function StopWatch({label,code}) {
   
            `}
           </style>
-     <center><div className="container" > 
+     <center><div className="container text-center" > 
     <div className="stop-watch">
       <Timer time={time} />
       <ControlButtons
@@ -175,12 +175,12 @@ function StopWatch({label,code}) {
   
     </div>
     
-  
-     <form>
-    <div className="btn">
-              <input type="submit" onClick={addema} value="End Appointment"/>
-              </div>
-  </form></div></center> </>
+    <center>
+    <br />
+     <form className='text-center'>
+
+              <input type="submit" className="btn-dark btn text-center" onClick={addema} value="End Appointment"/>
+  </form></center></div></center> </>
   );
 }
   
