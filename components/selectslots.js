@@ -97,7 +97,7 @@ export default function Addslots({qname,code}) {
               settimes(res)
           })
           
-  },[factor,labell])
+  },[])
 
   
 
