@@ -112,15 +112,17 @@ export default function Addslots({qname,code}) {
 
                 let k=time.endvalue.toDate();
                 console.log("*******************************************************",k)
-                k.setMinutes(k.getMinutes() - labels[e]);
+                console.log("not defoned",val,labels[val])
+                k.setMinutes(k.getMinutes() - (val?(labels[val]?labels[val]:0):0));
                 let alpha=Timestamp.fromDate(new Date(k));
                 console.log("kilooooooooooooooooooooooooooooo",time.startvalue,alpha.toDate())
                 if(k.getTime() > time.startvalue.toDate().getTime())
                   temp.push({startvalue:time.startvalue,endvalue:alpha})
+                settimes2(temp)
               })
 
               settimes2(temp)
-              
+              console.log(times2,"seeee ehre here")
           })
           
   },[])
