@@ -100,9 +100,26 @@ export default function Addslots({qname,code}) {
               console.log("res====",res)
               // settimes2(res)
               settimes(res)
-              if(k[val])handleSelect(val);
+              if(k[val]){console.log("true error");handleSelect(val);}
               else{console.log("correct error")}
-              console.log("helooooo",k)
+              console.log("helooooo",k,val)
+
+
+
+
+              let temp=[];
+              times.map((time)=>{
+
+                let k=time.endvalue.toDate();
+                console.log("*******************************************************",k)
+                k.setMinutes(k.getMinutes() - labels[e]);
+                let alpha=Timestamp.fromDate(new Date(k));
+                console.log("kilooooooooooooooooooooooooooooo",time.startvalue,alpha.toDate())
+                if(k.getTime() > time.startvalue.toDate().getTime())
+                  temp.push({startvalue:time.startvalue,endvalue:alpha})
+              })
+
+              settimes2(temp)
               
           })
           
